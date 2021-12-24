@@ -94,6 +94,8 @@ export class DinnerHallManager extends Module {
                 
             let tc = await thread.join();
             tc.send({ embeds: [embed] });
+            tc.setLocked(true);
+            
             threadLinks.push({ hall: embed.author.name, link: thread.id });
         }
 
