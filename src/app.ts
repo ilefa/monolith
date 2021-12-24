@@ -1,0 +1,206 @@
+/*
+ * Copyright (c) 2021 ILEFA Labs
+ * All Rights Reserved.
+ * 
+ * This software is proprietary and was designed and intended for internal use only.
+ * Unauthorized usage, dissemination, or replication of this software in part or in
+ * whole is unlawful, and punishable by the full extent of United States Copyright law.
+ */
+
+import { StartupInjector } from './lib/startup';
+import { IvyEngine, Logger } from '@ilefa/ivy';
+import { Client, ColorResolvable, Intents } from 'discord.js';
+import { DatabaseManager, RemotePreferenceBundle } from './lib/database';
+
+import {
+    BirthdayAnnounceTask,
+    BlueplateRefreshTask,
+    ServerRenameTask
+} from './lib/tasks';
+
+import {
+    Auditor,
+    BirthdayManager,
+    CustomEventManager,
+    DinnerHallManager,
+    PollManager,
+    PreferenceBundle,
+    RoleAssignmentManager,
+    TaskScheduler,
+    WelcomeManager
+} from './lib/modules';
+
+import {
+    AboutCommand,
+    AssignRoleCommand,
+    BigJannieCommand,
+    BirthdayCommand,
+    ChunksCommand,
+    DinnerHallSyncCommand,
+    FlowCommand,
+    GetRealCommand,
+    HelpCommand,
+    InvitesCommand,
+    KingCommand,
+    MaldCommand,
+    MembersCommand,
+    PollCommand,
+    PurgeCommand,
+    RerollCommand,
+    RoleAdminCommand,
+    RoleListCommand,
+    VersionCommand
+} from './lib/commands';
+
+import {
+    ChannelCreateProbe,
+    ChannelDeleteProbe,
+    ChannelPinsUpdateProbe,
+    ChannelUpdateProbe,
+    EmojiCreateProbe,
+    EmojiDeleteProbe,
+    EmojiUpdateProbe,
+    GuildBanAddProbe,
+    GuildBanRemoveProbe,
+    GuildIntegrationsUpdateProbe,
+    GuildMemberAddProbe,
+    GuildMemberRemoveProbe,
+    GuildMemberUpdateProbe,
+    GuildUpdateProbe,
+    InviteCreateProbe,
+    InviteDeleteProbe,
+    MessageDeleteBulkProbe,
+    MessageDeleteProbe,
+    MessageUpdateProbe,
+    RoleCreateProbe,
+    RoleDeleteProbe,
+    RoleUpdateProbe,
+    VoiceStateUpdateProbe,
+    WebhookUpdateProbe
+} from './lib/modules/auditor/probes';
+
+export class MonolithApp extends IvyEngine {
+    
+    auditor: Auditor;
+    pollManager: PollManager;
+    roleManager: RoleAssignmentManager;
+    database: DatabaseManager;
+    scheduler: TaskScheduler;
+    prefs: RemotePreferenceBundle;
+    bundle: PreferenceBundle;
+    
+    constructor(token: string,
+                prefix: string,
+                color: ColorResolvable,
+                logger: Logger,
+                superPerms: string[],
+                serverId: string,
+                prefs: RemotePreferenceBundle) {
+        super({
+            token,
+            name: 'Monolith',
+            logger,
+            superPerms: superPerms,
+            reportErrors: [serverId],
+            color,
+            prefix,
+            startup: new StartupInjector(prefs),
+            discord: {
+                intents: [
+                    Intents.FLAGS.GUILDS,
+                    Intents.FLAGS.GUILD_BANS,
+                    Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+                    Intents.FLAGS.GUILD_INTEGRATIONS,
+                    Intents.FLAGS.GUILD_MEMBERS,
+                    Intents.FLAGS.GUILD_MESSAGES,
+                    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+                    Intents.FLAGS.GUILD_PRESENCES,
+                    Intents.FLAGS.GUILD_VOICE_STATES,
+                    Intents.FLAGS.GUILD_WEBHOOKS
+                ],
+                partials: ['CHANNEL', 'MESSAGE', 'REACTION']
+            },
+            presence: {
+                status: 'online',
+                activities: [
+                    {
+                        type: 'WATCHING',
+                        name: 'over the sanctuary.'
+                    }
+                ]
+            }
+        });
+    }
+
+    onReady(_client: Client) {
+        this.registerEventHandler(new CustomEventManager(this, this.commandManager, this.pollManager));
+    }
+
+    registerCommands() {
+        this.registerCommand(new AboutCommand());
+        this.registerCommand(new AssignRoleCommand());
+        this.registerCommand(new BigJannieCommand());
+        this.registerCommand(new BirthdayCommand());
+        this.registerCommand(new ChunksCommand());
+        this.registerCommand(new DinnerHallSyncCommand());
+        this.registerCommand(new FlowCommand());
+        this.registerCommand(new GetRealCommand());
+        this.registerCommand(new HelpCommand());
+        this.registerCommand(new InvitesCommand());
+        this.registerCommand(new KingCommand());
+        this.registerCommand(new MaldCommand());
+        this.registerCommand(new MembersCommand());
+        this.registerCommand(new PollCommand());
+        this.registerCommand(new PurgeCommand());
+        this.registerCommand(new RerollCommand());
+        this.registerCommand(new RoleAdminCommand());
+        this.registerCommand(new RoleListCommand());
+        this.registerCommand(new VersionCommand());
+    }
+    
+    registerModules() {
+        this.registerModule(this.bundle = new PreferenceBundle(this.prefs));
+        this.registerModule(this.database = new DatabaseManager(this.logger));
+        this.registerModule(this.pollManager = new PollManager());
+        this.registerModule(this.roleManager = new RoleAssignmentManager());
+    
+        this.registerModule(this.auditor = new Auditor());
+        this.auditor.registerProbe(new ChannelCreateProbe());
+        this.auditor.registerProbe(new ChannelDeleteProbe());
+        this.auditor.registerProbe(new ChannelPinsUpdateProbe());
+        this.auditor.registerProbe(new ChannelUpdateProbe());
+        this.auditor.registerProbe(new EmojiCreateProbe());
+        this.auditor.registerProbe(new EmojiDeleteProbe());
+        this.auditor.registerProbe(new EmojiUpdateProbe());
+        this.auditor.registerProbe(new GuildBanAddProbe());
+        this.auditor.registerProbe(new GuildBanRemoveProbe());
+        this.auditor.registerProbe(new GuildIntegrationsUpdateProbe());
+        this.auditor.registerProbe(new GuildMemberAddProbe());
+        this.auditor.registerProbe(new GuildMemberRemoveProbe());
+        this.auditor.registerProbe(new GuildMemberUpdateProbe());
+        this.auditor.registerProbe(new GuildUpdateProbe());
+        this.auditor.registerProbe(new InviteCreateProbe());
+        this.auditor.registerProbe(new InviteDeleteProbe());
+        this.auditor.registerProbe(new MessageDeleteProbe());
+        this.auditor.registerProbe(new MessageDeleteBulkProbe());
+        this.auditor.registerProbe(new MessageUpdateProbe());
+        this.auditor.registerProbe(new RoleCreateProbe());
+        this.auditor.registerProbe(new RoleDeleteProbe());
+        this.auditor.registerProbe(new RoleUpdateProbe());
+        this.auditor.registerProbe(new VoiceStateUpdateProbe());
+        this.auditor.registerProbe(new WebhookUpdateProbe());
+
+        this.scheduler = new TaskScheduler();
+        this.scheduler.schedule({ interval: '0 0 * * *', task: new ServerRenameTask() });
+        this.scheduler.schedule({ interval: '0 0 * * *', task: new BlueplateRefreshTask() });
+        this.scheduler.schedule({ interval: '0 0 * * *', task: new BirthdayAnnounceTask() });
+
+        this.registerModule(this.scheduler);
+        this.registerModule(new WelcomeManager());
+        this.registerModule(new DinnerHallManager());
+        this.registerModule(new BirthdayManager());
+    }
+    
+    registerFlows() {}
+
+}
