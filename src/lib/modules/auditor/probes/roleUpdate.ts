@@ -125,7 +125,7 @@ export class RoleUpdateProbe extends AuditorProbe {
             .sort((a, b) => a.status - b.status);
 
         let report = await this.getAuditEntry(a.guild, 'ROLE_UPDATE');
-        console.log(report.changes);
+        // console.log(report.changes);
 
         return `${this.manager.ROLE} ${bold(executor)} updated role permissions for ${bold(b.name)}.\n` 
               + allChanges

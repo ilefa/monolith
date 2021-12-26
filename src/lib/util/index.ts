@@ -7,12 +7,14 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
-import { IvyEngine } from '@ilefa/ivy';
+import { IvyEngine, toWords } from '@ilefa/ivy';
 import { EnrollmentPayload } from '@ilefa/husky';
 import { DiningHallStatus, DiningHallType } from '@ilefa/blueplate';
 import { PermissionResolvable, User } from 'discord.js';
 
 export * from './paginator';
+export * from './redis';
+export * from './stash';
 
 export enum EmbedIconType {
     AUDIO = 'https://storage.googleapis.com/stonks-cdn/audio.png',
@@ -146,6 +148,20 @@ export const getEmoteForEnrollmentState = (state: EnrollmentPayload) => {
     if (state.overfill) return ':x:';
     if (state.percent > 0.9) return ':octagonal_sign:';
     return ':white_check_mark:';
+}
+
+/**
+ * Returns an emote for the XP placement leaderboard.
+ * @param placement the xp placement
+ */
+ export const getEmoteForXpPlacement = (placement: number) => {
+    if (placement == 1) return ':first_place:';
+    if (placement == 2) return ':second_place:';
+    if (placement == 3) return ':third_place:';
+    if (placement == 10) return ':keycap_ten:';
+    if (placement > 10) return '';
+
+    return `:${toWords(placement)}:`;
 }
 
 export const getEmoteForMeal = (meal: DiningHallStatus) => {

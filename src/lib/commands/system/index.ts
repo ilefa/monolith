@@ -7,4 +7,6 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
+export * from './autowired';
 export * from './category';
+export * from './invoker';

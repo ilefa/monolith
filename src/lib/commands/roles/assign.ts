@@ -8,27 +8,18 @@
  */
 
 import { User, Message } from 'discord.js';
-import { CommandCategory } from '../system';
 import { RoleAssignmentManager } from '../../modules';
-import { bold, Command, CommandReturn, emboss, IvyEmbedIcons } from '@ilefa/ivy';
+import { CommandCategory, AutowiredCommand } from '../system';
+import { bold, CommandReturn, emboss, IvyEmbedIcons } from '@ilefa/ivy';
 
-export class AssignRoleCommand extends Command {
+export class AssignRoleCommand extends AutowiredCommand<RoleAssignmentManager> {
     
-    roleManager: RoleAssignmentManager;
-
     constructor() {
-        super('role', `Invalid usage: ${emboss('.role <role>')}`, null, [], 'SEND_MESSAGES', false, false, CommandCategory.ROLE);
-    }
-    
-    start() {
-        super.start();
-        this.engine.client.once('ready', () => {
-            this.roleManager = this.engine.moduleManager.require<RoleAssignmentManager>('RoleAssignmentManager');
-        });
+        super('RoleAssignmentManager', 'role', `Invalid usage: ${emboss('.role <name>')}`, null, [], 'SEND_MESSAGES', false, false, CommandCategory.ROLE);
     }
 
     async execute(user: User, message: Message<boolean>, args: string[]): Promise<CommandReturn> {
-        if (!this.roleManager) {
+        if (!this.module) {
             this.reply(message, this.embeds.build('Roles', IvyEmbedIcons.MEMBER, `Hmm, something went wrong - please try again.`, [], message));
             return CommandReturn.EXIT;
         }
@@ -39,20 +30,20 @@ export class AssignRoleCommand extends Command {
         let roleName = args.join(' ');
         let member = message.member;
 
-        let role = await this.roleManager.getRoleByName(roleName);
+        let role = await this.module.getRoleByName(roleName);
         if (!role) {
             this.reply(message, this.embeds.build('Roles', IvyEmbedIcons.MEMBER, `I couldn't find a role called ${bold(roleName)}.`, [], message));
             return CommandReturn.EXIT;
         }
 
-        if (await this.roleManager.userHasRole(role.displayName, member)) {
-            this.roleManager.removeRoleFromUser(role.displayName, member,
+        if (await this.module.userHasRole(role.displayName, member)) {
+            this.module.removeRoleFromUser(role.displayName, member,
                 bundle => this.reply(message, this.embeds.build('Roles', IvyEmbedIcons.MEMBER, `Removed ${bold(bundle.displayName)} from you.`, [], message)),
                 () => this.reply(message, this.embeds.build('Roles', IvyEmbedIcons.MEMBER, `Could not remove ${bold(role)} from you.`, [], message)));
             return CommandReturn.EXIT;
         }
 
-        this.roleManager.applyRoleToUser(role.displayName, member,
+        this.module.applyRoleToUser(role.displayName, member,
             bundle => this.reply(message, this.embeds.build('Roles', IvyEmbedIcons.MEMBER, `Added ${bold(bundle.displayName)} to you.`, [], message)),
             () => this.reply(message, this.embeds.build('Roles', IvyEmbedIcons.MEMBER, `Could not grant you the ${bold(role)} role.`, [], message)));
 

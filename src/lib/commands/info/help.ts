@@ -98,7 +98,7 @@ export class HelpCommand extends Command {
                     help = null;
 
                 let perm = getEmoteForCommandPermission(command.permission);
-                helpList += `${perm + ' ' + bold('.' + command.name + (help ? ':' : ''))} ${help ? help : ''}\n`;
+                helpList += `${perm + ' ' + bold('.' + command.name + (help ? ':' : ''))} ${help ?? ''}\n`;
                 return _cmd;
             });
 

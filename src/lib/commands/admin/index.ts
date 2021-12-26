@@ -7,6 +7,8 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
+export * from './build';
 export * from './dhsync';
+export * from './prefs';
 export * from './purge';
 export * from './reroll';

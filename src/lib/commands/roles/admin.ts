@@ -7,9 +7,8 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
-import { MultiCommand } from '@ilefa/ivy';
 import { RoleAssignmentManager } from '../../modules/roles';
-import { CommandCategory } from '../system';
+import { AutowiredMultiCommand, CommandCategory } from '../system';
 
 import {
     AddAssignableRoleCommand,
@@ -17,20 +16,10 @@ import {
     RemoveAssignableRoleCommand
 } from './subcommands';
 
-export class RoleAdminCommand extends MultiCommand<RoleAssignmentManager> {
+export class RoleAdminCommand extends AutowiredMultiCommand<RoleAssignmentManager> {
 
     constructor() {
-        super('roleadmin', 'ADMINISTRATOR', null);
-        this.deleteMessage = false;
-        this.category = CommandCategory.ROLE;
-    }
-    
-    start() {
-        super.start();
-        this.engine.client.once('ready', _ => {
-            this.baseManager = this.engine.moduleManager.require<RoleAssignmentManager>('RoleAssignmentManager');
-            this.components.forEach(component => component.manager = this.baseManager);
-        });
+        super('roleadmin', 'ADMINISTRATOR', 'RoleAssignmentManager', null, false, CommandCategory.ROLE);
     }
 
     registerComponents() {

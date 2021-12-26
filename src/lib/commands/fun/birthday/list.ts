@@ -25,6 +25,11 @@ export class ListBirthdaysCommand extends CommandComponent<BirthdayManager> {
     }
 
     async execute(user: User, message: Message, args: string[]): Promise<CommandReturn> {
+        if (!this.manager) {
+            this.host.reply(message, this.host.embeds.build('Birthday Management', EmbedIconType.PREFS, `Could not autowire birthday manager, please investigate.`, [], message));
+            return CommandReturn.EXIT;
+        }
+
         if (args.length !== 0)
             return CommandReturn.HELP_MENU;
 

@@ -7,31 +7,20 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
-import { MultiCommand } from '@ilefa/ivy';
 import { ListBirthdaysCommand } from './list';
-import { CommandCategory } from '../../system';
 import { AssignBirthdayCommand } from './assign';
 import { RemoveBirthdayCommand } from './remove';
 import { SelfAssignBirthdayCommand } from './set';
 import { BirthdayManager } from '../../../modules';
 import { ForceBirthdayAnnouncementCommand } from './announce';
+import { AutowiredMultiCommand, CommandCategory } from '../../system';
 
-export class BirthdayCommand extends MultiCommand<BirthdayManager> {
+export class BirthdayCommand extends AutowiredMultiCommand<BirthdayManager> {
 
     public static readonly BIRTHDAY_FORMAT_REGEX = /\d{1,2}\/\d{1,2}/; 
 
     constructor() {
-        super('birthday', 'SEND_MESSAGES', null);
-        this.deleteMessage = false;
-        this.category = CommandCategory.FUN;
-    }
-
-    start() {
-        super.start();
-        this.engine.client.once('ready', _ => {
-            this.baseManager = this.engine.moduleManager.require<BirthdayManager>('BirthdayManager');
-            this.components.forEach(component => component.manager = this.baseManager);
-        });
+        super('birthday', 'SEND_MESSAGES', 'BirthdayManager', null, false, CommandCategory.FUN);
     }
 
     registerComponents() {

@@ -26,6 +26,11 @@ export class RemoveAssignableRoleCommand extends CommandComponent<RoleAssignment
     }
 
     async execute(user: User, message: Message<boolean>, args: string[]): Promise<CommandReturn> {
+        if (!this.manager) {
+            this.host.reply(message, this.host.embeds.build('Role Assignment Manager', EmbedIconType.PREFS, `Could not autowire role manager, please investigate.`, [], message));
+            return CommandReturn.EXIT;
+        }
+        
         let roleId = args[0];
         if (!roleId)
             return CommandReturn.HELP_MENU;

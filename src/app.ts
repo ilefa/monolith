@@ -23,10 +23,12 @@ import {
     BirthdayManager,
     CustomEventManager,
     DinnerHallManager,
+    LevelManager,
     PollManager,
     PreferenceBundle,
     RoleAssignmentManager,
     TaskScheduler,
+    UConnCourseDataProvider,
     WelcomeManager
 } from './lib/modules';
 
@@ -35,6 +37,7 @@ import {
     AssignRoleCommand,
     BigJannieCommand,
     BirthdayCommand,
+    BuildInfoCommand,
     ChunksCommand,
     DinnerHallSyncCommand,
     FlowCommand,
@@ -42,10 +45,13 @@ import {
     HelpCommand,
     InvitesCommand,
     KingCommand,
+    LeaderboardCommand,
     MaldCommand,
     MembersCommand,
     PollCommand,
+    PrefsCommand,
     PurgeCommand,
+    RankCommand,
     RerollCommand,
     RoleAdminCommand,
     RoleListCommand,
@@ -78,6 +84,7 @@ import {
     VoiceStateUpdateProbe,
     WebhookUpdateProbe
 } from './lib/modules/auditor/probes';
+import { CourseCommand } from './lib/commands/uconn';
 
 export class MonolithApp extends IvyEngine {
     
@@ -141,17 +148,22 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new AssignRoleCommand());
         this.registerCommand(new BigJannieCommand());
         this.registerCommand(new BirthdayCommand());
+        this.registerCommand(new BuildInfoCommand());
         this.registerCommand(new ChunksCommand());
+        this.registerCommand(new CourseCommand());
         this.registerCommand(new DinnerHallSyncCommand());
         this.registerCommand(new FlowCommand());
         this.registerCommand(new GetRealCommand());
         this.registerCommand(new HelpCommand());
         this.registerCommand(new InvitesCommand());
         this.registerCommand(new KingCommand());
+        this.registerCommand(new LeaderboardCommand());
         this.registerCommand(new MaldCommand());
         this.registerCommand(new MembersCommand());
         this.registerCommand(new PollCommand());
+        this.registerCommand(new PrefsCommand());
         this.registerCommand(new PurgeCommand());
+        this.registerCommand(new RankCommand());
         this.registerCommand(new RerollCommand());
         this.registerCommand(new RoleAdminCommand());
         this.registerCommand(new RoleListCommand());
@@ -199,6 +211,8 @@ export class MonolithApp extends IvyEngine {
         this.registerModule(new WelcomeManager());
         this.registerModule(new DinnerHallManager());
         this.registerModule(new BirthdayManager());
+        this.registerModule(new LevelManager());
+        this.registerModule(new UConnCourseDataProvider());
     }
     
     registerFlows() {}

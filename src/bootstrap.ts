@@ -38,5 +38,6 @@ logger.info('Build', `Monolith version ${DISPLAY_VERSION} (${COMMIT_HASH.trim() 
     
     logger.info('Env', `Loaded & applied \`${preset}\` preset in ${(Date.now() - start).toFixed(2)}ms.`);
     await db.end();
-    new MonolithApp(bundle.token, bundle.prefix, bundle.color, logger, bundle.superPerms, bundle.serverId, bundle).prefs = bundle;
+    
+    new MonolithApp(bundle.token, bundle.prefix, bundle.color, logger, bundle.superPerms, bundle.serverId, bundle);
 })();
