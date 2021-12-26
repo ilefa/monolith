@@ -96,7 +96,7 @@ export class Auditor extends Module {
         }
 
         this.channelId = bundle.auditorChannelId;
-        this.client.on('ready', () => {
+        this.client.once('ready', () => {
             this.log(`Launched ${this.probes.length} investigation${numberEnding(this.probes.length)}.`);
             for (let event of EventKeys) {
                 let handler = this.probes.find(handler => handler.eventType === event);

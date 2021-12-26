@@ -33,7 +33,7 @@ export class WelcomeManager extends Module {
         this.channelId = bundle.welcomeChannelId;
 
         this.client.on('guildMemberAdd', self.onWelcome);
-        this.client.on('ready', client => client
+        this.client.once('ready', client => client
             .channels
             .fetch(self.channelId)
             .then(channel => self.channel = channel as TextChannel)
