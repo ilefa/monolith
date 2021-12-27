@@ -36,18 +36,21 @@ import {
     AboutCommand,
     AssignRoleCommand,
     BigJannieCommand,
+    BingQiLingCommand,
     BirthdayCommand,
     BuildInfoCommand,
     ChunksCommand,
     DinnerHallSyncCommand,
     FlowCommand,
     GetRealCommand,
+    GigachadCommand,
     HelpCommand,
     InvitesCommand,
     KingCommand,
     LeaderboardCommand,
     MaldCommand,
     MembersCommand,
+    MisogynyCommand,
     PollCommand,
     PrefsCommand,
     PurgeCommand,
@@ -147,6 +150,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new AboutCommand());
         this.registerCommand(new AssignRoleCommand());
         this.registerCommand(new BigJannieCommand());
+        this.registerCommand(new BingQiLingCommand());
         this.registerCommand(new BirthdayCommand());
         this.registerCommand(new BuildInfoCommand());
         this.registerCommand(new ChunksCommand());
@@ -154,12 +158,14 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new DinnerHallSyncCommand());
         this.registerCommand(new FlowCommand());
         this.registerCommand(new GetRealCommand());
+        this.registerCommand(new GigachadCommand());
         this.registerCommand(new HelpCommand());
         this.registerCommand(new InvitesCommand());
         this.registerCommand(new KingCommand());
         this.registerCommand(new LeaderboardCommand());
         this.registerCommand(new MaldCommand());
         this.registerCommand(new MembersCommand());
+        this.registerCommand(new MisogynyCommand());
         this.registerCommand(new PollCommand());
         this.registerCommand(new PrefsCommand());
         this.registerCommand(new PurgeCommand());

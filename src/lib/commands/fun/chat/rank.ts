@@ -55,8 +55,8 @@ export class RankCommand extends AutowiredCommand<LevelManager> {
         let needed = this.module.getXpForLevel(profile.level + 1);
         let percent = current / needed;
         let amount = Math.floor((percent * 10));
-        let recharge = this.module.getRechargeStatus(user);
-        let surrounding = await this.module.getSurroundingUsers(user);
+        let recharge = this.module.getRechargeStatus(target);
+        let surrounding = await this.module.getSurroundingUsers(target);
         let position = await this.module.getLeaderboardPosition(target) + 1;
 
         let leveling = `:left_right_arrow: ${current.toLocaleString()}/${needed.toLocaleString()} XP [${'▰'.repeat(amount)}${'▱'.repeat((10 - amount))}] (${(percent * 100).toFixed(2)}%)`;
@@ -83,7 +83,7 @@ export class RankCommand extends AutowiredCommand<LevelManager> {
                     ? `:upside_down: ${who} ${after} at the bottom of the leaderboard.` 
                     : `:arrow_up: ${who} ${after} ${bold(this.getDownwardXpDifference(profile, surrounding).toLocaleString() + ' XP')} ahead of ${asMention(surrounding.downwards.userId)}`}`;
 
-        this.reply(message, this.embeds.build('Levels', EmbedIconType.XP, str, [], message, null, user.avatarURL()));
+        this.reply(message, this.embeds.build('Levels', EmbedIconType.XP, str, [], message, null, target.avatarURL()));
         return CommandReturn.EXIT;
     }
 

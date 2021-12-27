@@ -22,6 +22,7 @@ export class PreferenceBundle extends Module {
     public readonly birthdayChannelId: string;
     public readonly auditorChannelId: string;
     public readonly blueplateChannelId: string;
+    public readonly starboardChannelId: string;
     public readonly nameArchiveChannelId: string;
     public readonly superPerms: string[];
 
@@ -37,6 +38,7 @@ export class PreferenceBundle extends Module {
         this.birthdayChannelId = bundle.birthdayChannelId;
         this.auditorChannelId = bundle.auditorChannelId;
         this.blueplateChannelId = bundle.blueplateChannelId;
+        this.starboardChannelId = bundle.starboardChannelId;
         this.nameArchiveChannelId = bundle.nameArchiveChannelId;
         this.superPerms = bundle.superPerms;
     }

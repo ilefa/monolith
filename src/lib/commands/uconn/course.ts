@@ -11,10 +11,10 @@ import Classrooms from '@ilefa/husky/classrooms.json';
 
 import { UConnCourseDataProvider } from '../../modules';
 import { Message, TextChannel, User } from 'discord.js';
-import { EmbedIconType, PaginatedEmbed } from '../../util';
 import { AutowiredCommand, CommandCategory } from '../system';
 import { bold, CommandReturn, emboss, italic, link, replaceAll } from '@ilefa/ivy';
 import { CompleteCoursePayload, COURSE_IDENTIFIER, SectionData } from '@ilefa/husky';
+import { EmbedIconType, getCampusIndicator, getModalityIndicator, PaginatedEmbed } from '../../util';
 
 export class CourseCommand extends AutowiredCommand<UConnCourseDataProvider> {
 
@@ -55,7 +55,7 @@ export class CourseCommand extends AutowiredCommand<UConnCourseDataProvider> {
 
         let target = `https://cobalt-v4.ilefa.club/course/${course.name}`;
         if (!course.sections.length) {
-            this.reply(message, this.embeds.build('Course Search', EmbedIconType.UCONN, this.getEmbedDescription(course, target), [
+            this.reply(message, this.embeds.build(`${course.name} - ${course.catalogName}`, EmbedIconType.UCONN, this.getEmbedDescription(course, target), [
                 {
                     name: 'Sections',
                     value: ':( There aren\'t any sections being taught at the moment.',
@@ -74,7 +74,7 @@ export class CourseCommand extends AutowiredCommand<UConnCourseDataProvider> {
                     description: this.getEmbedDescription(course, target),
                     fields: [{
                         name: `Sections (${course.sections.length})`,
-                        value: items.map(section => `${bold(`[${termMarkers ? `${section.term[0] + section.term.substring(section.term.length - 2)} - ` : ''}${section.enrollment.current}/${section.enrollment.max}]`)} Section ${section.section} is taught ${this.getMeetingLocation(section)} by ${this.getInstructorName(section.instructor)}.`).join('\n'),
+                        value: items.map(section => `${bold(`[${getCampusIndicator(section.campus)}/${getModalityIndicator(section.mode)}${termMarkers ? `/${section.term[0] + section.term.substring(section.term.length - 2)}` : ''}]`)} Section ${section.section} is taught ${this.getMeetingLocation(section)} by ${this.getInstructorName(section.instructor)} (${section.enrollment.current}/${section.enrollment.max}).`).join('\n'),
                         inline: false
                     }]
                 }

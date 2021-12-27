@@ -7,12 +7,12 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
+import { EmbedIconType } from '../util';
 import { LevelBundle } from '../database';
 import { Message, User } from 'discord.js';
 import { BeAnObject } from '@typegoose/typegoose/lib/types';
-import { asMention, bold, CommandManager, Module, RechargeManager } from '@ilefa/ivy';
 import { getModelForClass, ReturnModelType } from '@typegoose/typegoose';
-import { EmbedIconType } from '../util';
+import { asMention, bold, CommandManager, Module, RechargeManager } from '@ilefa/ivy';
 
 export type SurroundingUsers = {
     upwards: LevelBundle;
@@ -162,11 +162,12 @@ export class LevelManager extends Module {
 
         profile.xp += earned;
         profile.totalXp += earned;
+        profile.messages++;
 
         let needed = this.getNeededXp(profile.level, profile.xp);
         if (needed <= 0) {
             profile.level++;
-            profile.xp = 0;
+            profile.xp = Math.abs(needed);
             
             message.channel.send({
                 embeds: [
@@ -175,9 +176,7 @@ export class LevelManager extends Module {
             });
         }
 
-        profile.messages++;
-
-        this.log(`[DEBUG] ${user.username}#${user.discriminator} earned ${earned} XP for message with ID ${message.id}.`);
+        // this.log(`[DEBUG] ${user.username}#${user.discriminator} earned ${earned} XP for message with ID ${message.id}.`);
 
         this
             .model

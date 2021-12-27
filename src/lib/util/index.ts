@@ -189,20 +189,43 @@ export const getEmoteForDiningHall = (hall: DiningHallType) => {
 }
 
 /**
- * Returns an indicator string
- * for a given campus input.
+ * Returns the campus indicator for the provided
+ * campus string.
  * 
- * @param campus the campus input
+ * @param campus the campus string
  */
-export const getCampusIndicator = (campus: string) => {
+ export const getCampusIndicator = (campus: string) => {
     campus = campus.toLowerCase();
     if (campus === 'storrs') return 'S';
     if (campus === 'hartford') return 'H';
     if (campus === 'stamford') return 'Z';
     if (campus === 'waterbury') return 'W';
-    if (campus === 'avery point') return 'A';
     if (campus === 'off-campus') return 'O';
 
+    // apparently the campus string contains a weird space character
+    if (campus.replace(/\s/, '') === 'averypoint')
+        return 'A';
+
+    return '?';
+}
+
+/**
+ * Returns the modality indicator for the provided
+ * modality string.
+ * 
+ * @param modality the modality string
+ */
+export const getModalityIndicator = (modality: string) => {
+    modality = modality.toLowerCase();
+    if (modality === 'online') return 'WW';
+    if (modality === 'distance learning') return 'DL';
+    if (modality === 'hybrid/blended') return 'HB';
+    if (modality === 'hybrid/blended reduced seat time') return 'HR';
+    if (modality === 'split') return 'SP';
+    if (modality === 'in person') return 'IP';
+    if (modality === 'service learning') return 'SL';
+    if (modality === 'by arrangement') return 'AR';
+    
     return '?';
 }
 

@@ -54,15 +54,8 @@ export class VoiceStateUpdateProbe extends AuditorProbe {
         if (cause == VoiceStateCause.CONNECT)
             return `${this.manager.VOICE} ${bold(this.asName(a.member))} connected to ${mentionChannel(b.channel.id)}.`;
 
-        if (cause == VoiceStateCause.DISCONNECT) {
-            let executor = await this.getExecutor(a.guild, 'MEMBER_DISCONNECT');
-            let end = `by ${executor}`;
-
-            if (executor === this.DEFAULT_EXECUTOR)
-                end = '';
-
-            return `${this.manager.VOICE} ${bold(this.asName(a.member))} was disconnected from ${mentionChannel(a.channel.id)}${end}.`;
-        }
+        if (cause == VoiceStateCause.DISCONNECT)
+            return `${this.manager.VOICE} ${bold(this.asName(a.member))} disconnected from ${mentionChannel(a.channel.id)}.`;
 
         if (cause == VoiceStateCause.SWITCH_CHANNEL)
             return `${this.manager.VOICE} ${bold(this.asName(a.member))} switched from ${mentionChannel(a.channel.id)} to ${mentionChannel(b.channel.id)}.`;

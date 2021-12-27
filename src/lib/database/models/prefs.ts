@@ -12,6 +12,7 @@ import { modelOptions, prop } from '@typegoose/typegoose';
 
 @modelOptions({ schemaOptions: { collection: 'prefs' } })
 export class RemotePreferenceBundle {
+    
     @prop({ required: true })
     name: string;
     
@@ -41,10 +42,14 @@ export class RemotePreferenceBundle {
 
     @prop({ required: true })
     blueplateChannelId: string;
+
+    @prop({ required: true })
+    starboardChannelId: string;
     
     @prop({ required: true })
     nameArchiveChannelId: string;
 
     @prop({ required: true, type: () => [String] })
     superPerms: string[];
+
 }
