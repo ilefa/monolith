@@ -30,7 +30,7 @@ export class SelfAssignBirthdayCommand extends CommandComponent<BirthdayManager>
             return CommandReturn.HELP_MENU;
 
         let birthday = args[0];
-        if (!BirthdayCommand.BIRTHDAY_FORMAT_REGEX.test(birthday)) {
+        if (!this.ensureValidBirthday(birthday)) {
             this.host.reply(message, this.host.embeds.build('Birthday', EmbedIconType.BIRTHDAY, `Invalid birthday: ${emboss(birthday)}`, [
                 {
                     name: 'Valid Format',
@@ -45,6 +45,20 @@ export class SelfAssignBirthdayCommand extends CommandComponent<BirthdayManager>
             () => this.host.reply(message, this.host.embeds.build('Birthday', EmbedIconType.BIRTHDAY, `You have already set your birthday.`, [], message)));
 
         return CommandReturn.EXIT;
+    }
+
+    private ensureValidBirthday = (input: string) => {
+        if (!BirthdayCommand.BIRTHDAY_FORMAT_REGEX.test(input))
+            return false;
+
+        let [month, day] = input.split('/').map(parseInt);
+        if (month < 1 || month > 12)
+            return false;
+
+        if (day < 1 || day > 31)
+            return false;
+
+        return true;
     }
 
 }

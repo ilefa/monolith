@@ -17,7 +17,7 @@ import { AutowiredMultiCommand, CommandCategory } from '../../system';
 
 export class BirthdayCommand extends AutowiredMultiCommand<BirthdayManager> {
 
-    public static readonly BIRTHDAY_FORMAT_REGEX = /\d{1,2}\/\d{1,2}/; 
+    public static readonly BIRTHDAY_FORMAT_REGEX = /^\d{1,2}\/\d{1,2}$/; 
 
     constructor() {
         super('birthday', 'SEND_MESSAGES', 'BirthdayManager', null, false, CommandCategory.FUN);
