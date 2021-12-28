@@ -61,6 +61,7 @@ import {
     RockCommand,
     RoleAdminCommand,
     RoleListCommand,
+    SudoCommand,
     VersionCommand
 } from './lib/commands';
 
@@ -179,6 +180,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new RockCommand());
         this.registerCommand(new RoleAdminCommand());
         this.registerCommand(new RoleListCommand());
+        this.registerCommand(new SudoCommand())
         this.registerCommand(new VersionCommand());
     }
     

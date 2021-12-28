@@ -12,3 +12,4 @@ export * from './dhsync';
 export * from './prefs';
 export * from './purge';
 export * from './reroll';
+export * from './sudo'
