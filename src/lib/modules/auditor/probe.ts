@@ -42,7 +42,10 @@ export abstract class AuditorProbe {
             .fetch(channelId) as TextChannel;
     }
 
-    asName = (member: GuildMember | User) => {
+    asName = (member: GuildMember | User | null) => {
+        if (!member)
+            return 'an unknown user';
+
         if (member instanceof GuildMember)
             member = member.user;
 

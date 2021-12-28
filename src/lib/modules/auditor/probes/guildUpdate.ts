@@ -175,7 +175,7 @@ export class GuildUpdateProbe extends AuditorProbe {
             return `${this.manager.COG} ${bold(executor)} changed the server locale to ${bold(b.preferredLocale)}.`;
 
         if (cause == GuildUpdateCause.SERVER_DESCRIPTION)
-            return `${this.manager.COG} ${bold(executor)} updated the server description:\n${codeBlock('', b.description)}.`;
+            return `${this.manager.COG} ${bold(executor)} updated the server description:\n${codeBlock('', b.description)}`;
 
         if (cause == GuildUpdateCause.BANNER)
             return `${this.manager.COG} ${bold(executor)} updated the server banner.\n` 

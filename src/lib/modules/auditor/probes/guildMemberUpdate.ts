@@ -63,8 +63,10 @@ export class GuildMemberUpdateProbe extends AuditorProbe {
 
     private generateChangeMessage = async (a: GuildMember, b: GuildMember, cause: MemberUpdateCause) => {
         let report = await this.getAuditEntry(a.guild, 'MEMBER_UPDATE');
-        let executor = this.asName(report.executor);
-        let selfChange = report.executor.id === b.id;
+        let executor = this.asName(report?.executor);
+        let selfChange = false;
+        if (executor !== 'an unknown user')
+            selfChange = report.executor.id === b.id;
 
         if (cause == MemberUpdateCause.UNKNOWN)
             return;
