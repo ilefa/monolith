@@ -12,9 +12,18 @@ import Classrooms from '@ilefa/husky/classrooms.json';
 import { UConnCourseDataProvider } from '../../modules';
 import { Message, TextChannel, User } from 'discord.js';
 import { AutowiredCommand, CommandCategory } from '../system';
-import { bold, CommandReturn, emboss, italic, link, replaceAll } from '@ilefa/ivy';
 import { CompleteCoursePayload, COURSE_IDENTIFIER, SectionData } from '@ilefa/husky';
-import { EmbedIconType, getCampusIndicator, getModalityIndicator, PaginatedEmbed } from '../../util';
+import { EmbedIconType, getCampusIndicator, getModalityIndicator } from '../../util';
+
+import {
+    bold,
+    CommandReturn,
+    emboss,
+    italic,
+    link,
+    PaginatedEmbed,
+    replaceAll
+} from '@ilefa/ivy';
 
 export class CourseCommand extends AutowiredCommand<UConnCourseDataProvider> {
 

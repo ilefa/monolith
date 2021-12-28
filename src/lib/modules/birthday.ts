@@ -43,7 +43,13 @@ export class BirthdayManager extends Module {
         let entry = await this.getBirthday(user);
         if (entry) return failure();
 
-        let birthday = await this.model.create({ user: user instanceof User ? user.id : user, date });
+        // remove leading zeroes for date
+        let clean = date
+            .split('/')
+            .map(ent => ent.replace(/^0+/, ''))
+            .join('/');
+
+        let birthday = await this.model.create({ user: user instanceof User ? user.id : user, date: clean });
         await birthday
             .save()
             .then(then)

@@ -60,6 +60,7 @@ export abstract class AuditorProbe {
         await guild
             .fetchAuditLogs({ type, limit })
             .then(logs => logs.entries.first())
+            .then(entry => Date.now() - entry.createdTimestamp < 2000 ? entry : null)
             .catch(_ => null);
 
 }

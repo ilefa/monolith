@@ -24,6 +24,7 @@ export class PreferenceBundle extends Module {
     public readonly blueplateChannelId: string;
     public readonly starboardChannelId: string;
     public readonly nameArchiveChannelId: string;
+    public readonly levelUpChannelId: string;
     public readonly superPerms: string[];
 
     constructor(bundle: RemotePreferenceBundle) {
@@ -40,6 +41,7 @@ export class PreferenceBundle extends Module {
         this.blueplateChannelId = bundle.blueplateChannelId;
         this.starboardChannelId = bundle.starboardChannelId;
         this.nameArchiveChannelId = bundle.nameArchiveChannelId;
+        this.levelUpChannelId = bundle.levelUpChannelId;
         this.superPerms = bundle.superPerms;
     }
 

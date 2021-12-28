@@ -8,7 +8,7 @@
  */
 
 import { User, Message } from 'discord.js';
-import { CommandCategory } from '../system';
+import { CommandCategory } from '../../system';
 import { Command, CommandReturn } from '@ilefa/ivy';
 
 export class GigachadCommand extends Command {

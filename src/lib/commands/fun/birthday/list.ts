@@ -7,11 +7,19 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
+import { EmbedIconType } from '../../../util';
 import { BirthdayManager } from '../../../modules';
 import { Message, TextChannel, User } from 'discord.js';
-import { EmbedIconType, PaginatedEmbed } from '../../../util';
 import { BirthdayBundle, BirthdayDateFormat } from '../../../database';
-import { asMention, bold, CommandComponent, CommandReturn, PageContent } from '@ilefa/ivy';
+
+import {
+    asMention,
+    bold,
+    CommandComponent,
+    CommandReturn,
+    PageContent,
+    PaginatedEmbed
+} from '@ilefa/ivy';
 
 type CollapsedBirthdayEntries = {
     users: User[];
@@ -26,7 +34,7 @@ export class ListBirthdaysCommand extends CommandComponent<BirthdayManager> {
 
     async execute(user: User, message: Message, args: string[]): Promise<CommandReturn> {
         if (!this.manager) {
-            this.host.reply(message, this.host.embeds.build('Birthday Management', EmbedIconType.PREFS, `Could not autowire birthday manager, please investigate.`, [], message));
+            this.host.reply(message, this.host.embeds.build('Birthdays', EmbedIconType.PREFS, `mm, something went wrong - please try again.`, [], message));
             return CommandReturn.EXIT;
         }
 
@@ -39,7 +47,7 @@ export class ListBirthdaysCommand extends CommandComponent<BirthdayManager> {
             return CommandReturn.EXIT;
         }
 
-        birthdays = birthdays.sort((a, b) => a.date.localeCompare(b.date));
+        birthdays = birthdays.sort(this.sortBirthdays);
 
         PaginatedEmbed.ofItems<BirthdayBundle>(
             this.host.engine, message.channel as TextChannel, user,
@@ -48,6 +56,17 @@ export class ListBirthdaysCommand extends CommandComponent<BirthdayManager> {
         );
 
         return CommandReturn.EXIT;
+    }
+
+    private sortBirthdays = (a: BirthdayBundle, b: BirthdayBundle) => {
+        let aMonth = parseInt(a.date.split('/')[0]);
+        let bMonth = parseInt(b.date.split('/')[0]);
+        if (aMonth !== bMonth)
+            return aMonth - bMonth;
+
+        let aDay = parseInt(a.date.split('/')[1]);
+        let bDay = parseInt(b.date.split('/')[1]);
+        return aDay - bDay;
     }
 
     private generatePageContent = (bundles: BirthdayBundle[]): PageContent => {

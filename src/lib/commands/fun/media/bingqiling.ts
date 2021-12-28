@@ -8,7 +8,7 @@
  */
 
 import { Message, User } from 'discord.js';
-import { CommandCategory } from '../system';
+import { CommandCategory } from '../../system';
 import { Command, CommandReturn } from '@ilefa/ivy';
 
 export class BingQiLingCommand extends Command {

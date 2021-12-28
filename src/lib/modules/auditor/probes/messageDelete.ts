@@ -58,7 +58,8 @@ export class MessageDeleteProbe extends AuditorProbe {
                 .join(' ');
 
         let executor = await this.getExecutor(message.guild, 'MESSAGE_DELETE');
-        reports.send(`${this.manager.CHANNEL} Message sent in ${mentionChannel(message.channel.id)} by ${bold(this.asName(message.author))} was deleted by ${bold(executor)}.\n` 
+        let showExecutor = executor !== this.DEFAULT_EXECUTOR;
+        reports.send(`${this.manager.CHANNEL} Message sent in ${mentionChannel(message.channel.id)} by ${bold(this.asName(message.author))} was deleted${showExecutor ? ' by ' + bold(executor) : ''}.\n` 
                    + `${this.manager.DIVIDER} The message was sent at ${bold(time(message.createdAt.getTime()))}${cond(message.pinned, ', and was pinned', '')}.\n`
                    + rxns + (!!rxns ? '\n' : '')
                    + `${this.manager.DIVIDER} Original content:`);

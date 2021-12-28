@@ -8,17 +8,17 @@
  */
 
 import { Message, User } from 'discord.js';
-import { CommandCategory } from '../system';
+import { CommandCategory } from '../../system';
 import { Command, CommandReturn } from '@ilefa/ivy';
 
-export class MisogynyCommand extends Command {
+export class EyebrowCommand extends Command {
 
     constructor() {
-        super('misogyny', 'qwubgrwingipfmwqepowgn', null, [], 'SEND_MESSAGES', false, false, CommandCategory.FUN);
+        super('eyebrow', ':face_with_raised_eyebrow:', null, [], 'SEND_MESSAGES', false, false, CommandCategory.FUN);
     }
 
-    async execute(user: User, message: Message, args: string[]): Promise<CommandReturn> {
-        this.reply(message, 'https://media.discordapp.net/attachments/785050947407052824/915799627280834620/final_61a8369930ec5900648ec7b6_367752.gif')
+    async execute(user: User, message: Message<boolean>, args: string[]): Promise<CommandReturn> {
+        this.reply(message, 'https://media.discordapp.net/attachments/824834791269466163/914379537226289192/ezgif.com-gif-maker.gif');
         return CommandReturn.EXIT;
     }
 

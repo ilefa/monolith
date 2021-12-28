@@ -22,7 +22,7 @@ export class SelfAssignBirthdayCommand extends CommandComponent<BirthdayManager>
 
     async execute(user: User, message: Message, args: string[]): Promise<CommandReturn> {
         if (!this.manager) {
-            this.host.reply(message, this.host.embeds.build('Birthday Management', EmbedIconType.PREFS, `Hmm, something went wrong - please try again.`, [], message));
+            this.host.reply(message, this.host.embeds.build('Birthdays', EmbedIconType.PREFS, `Hmm, something went wrong - please try again.`, [], message));
             return CommandReturn.EXIT;
         }
 

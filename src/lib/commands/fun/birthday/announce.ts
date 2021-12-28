@@ -21,7 +21,7 @@ export class ForceBirthdayAnnouncementCommand extends CommandComponent<BirthdayM
     async execute(user: User, message: Message, args: string[]): Promise<CommandReturn> {
         let scheduler = this.host.engine.moduleManager.require<TaskScheduler>('TaskScheduler');
         if (!scheduler) {
-            this.host.reply(message, this.host.embeds.build('Birthday Managementt', EmbedIconType.ERROR, 'Could not locate the task scheduler.', [], message));
+            this.host.reply(message, this.host.embeds.build('Birthday Management', EmbedIconType.ERROR, 'Could not locate the task scheduler.', [], message));
             return CommandReturn.EXIT;
         }
 

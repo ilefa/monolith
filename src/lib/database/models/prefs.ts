@@ -48,6 +48,9 @@ export class RemotePreferenceBundle {
     
     @prop({ required: true })
     nameArchiveChannelId: string;
+    
+    @prop({ required: true })
+    levelUpChannelId: string;
 
     @prop({ required: true, type: () => [String] })
     superPerms: string[];

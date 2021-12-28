@@ -7,9 +7,10 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
+import { PreferenceBundle } from '.';
 import { EmbedIconType } from '../util';
 import { LevelBundle } from '../database';
-import { Message, User } from 'discord.js';
+import { Message, TextChannel, User } from 'discord.js';
 import { BeAnObject } from '@typegoose/typegoose/lib/types';
 import { getModelForClass, ReturnModelType } from '@typegoose/typegoose';
 import { asMention, bold, CommandManager, Module, RechargeManager } from '@ilefa/ivy';
@@ -23,6 +24,7 @@ export class LevelManager extends Module {
 
     private rechargeManager: RechargeManager;
     private commandManager: CommandManager;
+    private channelId: string;
     private model: ReturnModelType<typeof LevelBundle, BeAnObject>;
 
     public constructor() {
@@ -32,6 +34,16 @@ export class LevelManager extends Module {
     start() {
         this.model = getModelForClass(LevelBundle);
         this.commandManager = this.manager.engine.commandManager;
+
+        const bundle = this.manager.require<PreferenceBundle>('Prefs');
+
+        if (!bundle) {
+            this.manager.unregisterModule(this);
+            this.warn('Failed to retrieve channelId from the preference bundle.');
+            return;
+        }
+        
+        this.channelId = bundle.levelUpChannelId;
         this.rechargeManager = new RechargeManager();
 
         this.client.on('messageCreate', async message => await this.onChat(message));
@@ -107,7 +119,7 @@ export class LevelManager extends Module {
 
         all = all
             .sort((a, b) => b.level - a.level)
-            .sort((a, b) => b.xp - a.xp);
+            .sort((a, b) => b.totalXp - a.totalXp);
 
         return all.findIndex(p => p.userId === profile.userId);
     }
@@ -124,7 +136,7 @@ export class LevelManager extends Module {
 
         all = all
             .sort((a, b) => b.level - a.level)
-            .sort((a, b) => b.xp - a.xp);
+            .sort((a, b) => b.totalXp - a.totalXp);
 
         let index = all.findIndex(p => p.userId === profile.userId);
         let downwards = index >= all.length ? null : all[index + 1];
@@ -169,7 +181,11 @@ export class LevelManager extends Module {
             profile.level++;
             profile.xp = Math.abs(needed);
             
-            message.channel.send({
+            let channel = await this.client.channels.fetch(this.channelId) as TextChannel;
+            if (!channel)
+                return this.warn('Failed to retrieve channel.');
+
+            channel.send({
                 embeds: [
                     this.manager.engine.embeds.build('Levels', EmbedIconType.XP, `:tada: Congratulations ${asMention(user)}, you've reached ${bold(`Level ${profile.level.toLocaleString()}`)}!`)
                 ]

@@ -8,16 +8,17 @@
  */
 
 import { select } from 'weighted-map';
-import { CommandCategory } from '../system';
+import { CommandCategory } from '../../system';
 import { User, Message, TextChannel } from 'discord.js';
-import { EmbedIconType, isSuperPerms, PaginatedEmbed } from '../../util';
+import { EmbedIconType, isSuperPerms } from '../../../util';
 
 import {
     bold,
     Command,
     CommandReturn,
     emboss,
-    link
+    link,
+    PaginatedEmbed
 } from '@ilefa/ivy';
 
 const weightedMap = new Map<string, number>()

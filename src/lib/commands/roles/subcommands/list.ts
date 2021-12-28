@@ -7,11 +7,11 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
+import { EmbedIconType } from '../../../util';
 import { RoleAssignmentManager } from '../../../modules';
 import { SelfAssignableRoleBundle } from '../../../database';
-import { CommandComponent, CommandReturn } from '@ilefa/ivy';
-import { EmbedIconType, PaginatedEmbed } from '../../../util';
 import { GuildMember, Message, TextChannel, User } from 'discord.js';
+import { CommandComponent, CommandReturn, PaginatedEmbed } from '@ilefa/ivy';
 
 type StatefulRoleBundle = SelfAssignableRoleBundle & {
     members: GuildMember[];

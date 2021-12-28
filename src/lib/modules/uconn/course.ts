@@ -9,8 +9,7 @@
 
 import axios from 'axios';
 
-import { Stash } from '../../util';
-import { Module } from '@ilefa/ivy';
+import { Module, Stash } from '@ilefa/ivy';
 import { CompleteCoursePayload, COURSE_IDENTIFIER } from '@ilefa/husky';
 
 export class UConnCourseDataProvider extends Module {
