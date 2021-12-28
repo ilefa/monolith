@@ -37,10 +37,10 @@ export class CourseCommand extends AutowiredCommand<UConnCourseDataProvider> {
             return CommandReturn.EXIT;
         }
         
-        if (args.length !== 1)
+        if (args.length === 0)
             return CommandReturn.HELP_MENU;
 
-        if (!COURSE_IDENTIFIER.test(args[0])) {
+        if (args.length > 1 || !COURSE_IDENTIFIER.test(args[0])) {
             this.reply(message, this.embeds.build('Course Search', EmbedIconType.UCONN, `Invalid course name: ${emboss(args[0])}`, [
                 {
                     name: 'Valid Course Name',
@@ -56,7 +56,7 @@ export class CourseCommand extends AutowiredCommand<UConnCourseDataProvider> {
             return CommandReturn.EXIT;
         }
 
-        let course = await this.module.getCourse(args[0]);
+        let course = await this.module.getCourse(args[0].toUpperCase());
         if (!course) {
             this.reply(message, this.embeds.build('Course Search', EmbedIconType.UCONN, `Hmm, we couldn't find any courses named ${emboss(args[0])}.`, [], message));
             return CommandReturn.EXIT;
@@ -83,7 +83,7 @@ export class CourseCommand extends AutowiredCommand<UConnCourseDataProvider> {
                     description: this.getEmbedDescription(course, target),
                     fields: [{
                         name: `Sections (${course.sections.length})`,
-                        value: items.map(section => `${bold(`[${getCampusIndicator(section.campus)}/${getModalityIndicator(section.mode)}${termMarkers ? `/${section.term[0] + section.term.substring(section.term.length - 2)}` : ''}]`)} Section ${section.section} is taught ${this.getMeetingLocation(section)} by ${this.getInstructorName(section.instructor)} (${section.enrollment.current}/${section.enrollment.max}).`).join('\n'),
+                        value: items.map(section => `${bold(`[${getCampusIndicator(section.campus)}/${getModalityIndicator(section.mode)}${termMarkers ? `/${section.term[0] + section.term.substring(section.term.length - 2)}` : ''}]`)} Section ${section.section} is taught ${this.getMeetingLocation(section)} by ${this.getInstructorName(section.instructor)} (${section.enrollment.current || 0}/${section.enrollment.max || 0}).`).join('\n'),
                         inline: false
                     }]
                 }
@@ -104,11 +104,15 @@ export class CourseCommand extends AutowiredCommand<UConnCourseDataProvider> {
     private getMeetingLocation = (section: SectionData) =>
         section.location.name === 'No Room Required - Online'
             ? 'virtually'
-            : 'in ' + section.location.name
-                .split(/([A-Z]{2,4}\s\d{1,4}[a-zA-Z]{0,1})/)
-                .filter(str => !!str)
-                .map(room => this.isManagedRoom(room) ? `${bold(room)}` : link(room, `https://cobalt-v4.ilefa.club/room/${room.replace(/\s/g, '')}`))
-                .join(', ');
+            : section.location.name === 'No Room Required - Dept Space'
+                ? 'in dept space'
+                : 'in ' + section.location.name
+                    .split(/([A-Z]{2,4}\s\d{1,4}[a-zA-Z]{0,1})/)
+                    .filter(str => !!str)
+                    .map(room => this.isManagedRoom(room.replace(/\s/g, ''))
+                        ? link(room, `https://cobalt-v4.ilefa.club/room/${room.replace(/\s/g, '')}`)
+                        : `${bold(room)}`)
+                    .join(', ');
 
     private getInstructorName = (instructor: string) => {
         let copy = instructor.trim();
