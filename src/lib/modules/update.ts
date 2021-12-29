@@ -41,10 +41,11 @@ export class UpdateManager extends Module {
 
     end() {}
 
-    runUpdate = () =>
+    runUpdate = (then: () => void, failure: (message: any) => void) =>
         axios
             .post('https://172.17.0.1:3000/update')
             .then(_ => {
+                then();
                 this.client.user.setPresence({
                     status: 'dnd',
                     activities: [{
@@ -56,6 +57,6 @@ export class UpdateManager extends Module {
                 let webhook = new WebhookClient({ url: this.webhookUrl });
                 webhook.send({ content: `:crystal_ball: ${bold('Monolith')} is restarting for an update.` });
             })
-            .catch(_ => null);
+            .catch(failure);
 
 }

@@ -8,6 +8,7 @@
  */
 
 import { Message, User } from 'discord.js';
+import { EmbedIconType } from '../../util';
 import { UpdateManager } from '../../modules';
 import { CommandReturn, emboss } from '@ilefa/ivy';
 import { AutowiredCommand, CommandCategory } from '../system';
@@ -22,7 +23,11 @@ export class UpdateCommand extends AutowiredCommand<UpdateManager> {
         if (args.length !== 0)
             return CommandReturn.HELP_MENU;
 
-        await this.module.runUpdate();
+        await this.module.runUpdate(
+            () => this.reply(message, this.embeds.build('Monolith Instance Manager', EmbedIconType.TEST, 'Sent update signal.')),
+            reason => this.reply(message, this.embeds.build('Monolith Instance Manager', EmbedIconType.TEST, `Failed to invoke update signal:\n${emboss(reason)}`, [], message)
+        ));
+
         return CommandReturn.EXIT;
     }
 
