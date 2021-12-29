@@ -8,4 +8,4 @@ RUN npm set //npm.pkg.github.com/:_authToken $TOKEN && \
     apk add git
 COPY --chown=node:node . .
 USER node
-CMD [ "npm", "start:mim" ]
+CMD [ "npm", "run", "start:mim" ]
