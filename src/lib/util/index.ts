@@ -245,3 +245,26 @@ export const isSuperPerms = (engine: IvyEngine, user: User | string) =>
         .includes(user instanceof User
             ? user.id
             : user); 
+
+/**
+ * Given a time like "9:00 PM", returns
+ * a date object containing the time,
+ * and optionally from a given initial
+ * date.
+ * 
+ * @param time the time to convert
+ * @param date the initial date (or now)
+ */
+ export const getDateFromTime = (time: string, date = new Date()) => {
+    let offset = time.split(':')[0].length;
+    let hours = parseInt(time.substring(0, offset));
+    if (hours !== 12 && time.includes('PM'))
+        hours += 12;
+
+    return new Date(date.getFullYear(),
+                    date.getMonth(),
+                    date.getDate(),
+                    hours,
+                    parseInt(time.substring(offset + 1, offset + 3)),
+                    0, 0);
+}

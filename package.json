@@ -21,6 +21,7 @@
     "homepage": "https://github.com/ilefa/monolith#readme",
     "dependencies": {
         "@ilefa/blueplate": "^1.0.4",
+        "@ilefa/bluesign": "^1.0.0",
         "@ilefa/husky": "^1.1.4",
         "@ilefa/ivy": "^1.0.8",
         "@typegoose/typegoose": "^9.3.1",
@@ -28,6 +29,7 @@
         "discord.js": "^13.3.1",
         "dotenv": "^10.0.0",
         "expiry-map": "^1.1.0",
+        "moment": "^2.29.1",
         "mongoose": "^6.0.14",
         "node-schedule": "^2.1.0",
         "qs": "^6.10.2",

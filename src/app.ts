@@ -30,6 +30,7 @@ import {
     RoleAssignmentManager,
     TaskScheduler,
     UConnCourseDataProvider,
+    UConnRoomDataProvider,
     UpdateManager,
     WelcomeManager
 } from './lib/modules';
@@ -65,6 +66,7 @@ import {
     RockCommand,
     RoleAdminCommand,
     RoleListCommand,
+    RoomCommand,
     SudoCommand,
     UpdateCommand,
     VersionCommand
@@ -190,6 +192,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new RockCommand());
         this.registerCommand(new RoleAdminCommand());
         this.registerCommand(new RoleListCommand());
+        this.registerCommand(new RoomCommand());
         this.registerCommand(new SudoCommand())
         this.registerCommand(new UpdateCommand())
         this.registerCommand(new VersionCommand());
@@ -241,6 +244,7 @@ export class MonolithApp extends IvyEngine {
 
         // UConn-related modules
         this.registerModule(new UConnCourseDataProvider());
+        this.registerModule(new UConnRoomDataProvider());
     }
     
     registerFlows() {}
