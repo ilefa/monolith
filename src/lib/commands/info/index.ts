@@ -8,6 +8,7 @@
  */
 
 export * from './about';
+export * from './emote';
 export * from './help';
 export * from './invites';
 export * from './members';

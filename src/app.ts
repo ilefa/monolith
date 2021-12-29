@@ -44,6 +44,7 @@ import {
     ChunksCommand,
     CourseCommand,
     DinnerHallSyncCommand,
+    EmoteCommand,
     EyebrowCommand,
     FlowCommand,
     GetRealCommand,
@@ -163,6 +164,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new ChunksCommand());
         this.registerCommand(new CourseCommand());
         this.registerCommand(new DinnerHallSyncCommand());
+        this.registerCommand(new EmoteCommand());
         this.registerCommand(new EyebrowCommand());
         this.registerCommand(new FlowCommand());
         this.registerCommand(new GetRealCommand());
