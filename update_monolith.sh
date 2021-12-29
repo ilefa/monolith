@@ -3,6 +3,7 @@ token=$( cat token.txt )
 
 if [[ -n "$result" ]]; then
   docker container stop -t 5 monolith
+  sleep 1.5
   docker rmi monolith
 fi
 

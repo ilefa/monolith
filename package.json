@@ -6,6 +6,7 @@
     "scripts": {
         "start": "npm run artifacts && npm run start:bot",
         "start:bot": "ts-node src/bootstrap",
+        "start:mim": "git pull && npm i && npm start",
         "artifacts": "chmod +x generate_build.sh && ./generate_build.sh"
     },
     "repository": {
