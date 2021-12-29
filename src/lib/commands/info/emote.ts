@@ -26,7 +26,7 @@ export class EmoteCommand extends Command {
         let items = [...emotes.values()];
 
         PaginatedEmbed.ofItems<GuildEmoji>(this.engine, message.channel as TextChannel, user,
-            'Emotes', EmbedIconType.MESSAGE, items, 30,
+            'Emotes', EmbedIconType.MESSAGE, items, 50,
             items => {
                 let emoji = items.map(asEmote);
                 let description = '';
