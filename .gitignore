@@ -9,4 +9,5 @@ temp/
 ._.*
 .env
 .env.*
+token.txt
 build_info.json
