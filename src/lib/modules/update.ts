@@ -42,18 +42,17 @@ export class UpdateManager extends Module {
 
     end() {}
 
-    runUpdate = (then: (response: string) => void, failure: (message: any) => void) =>
+    runUpdate = (then: () => void, failure: (message: any) => void) =>
         axios
-            .post('https://172.17.0.1:3000/update')
-            .then(res => {
-                then(res.data);
-                // this.client.user.setPresence({
-                //     status: 'dnd',
-                //     activities: [{
-                //         type: 'PLAYING',
-                //         name: 'with Docker.'
-                //     }]
-                // })
+            .post('http://172.17.0.1:3000/update')
+            .then(_ => {
+                this.client.user.setPresence({
+                    status: 'dnd',
+                    activities: [{
+                        type: 'PLAYING',
+                        name: 'with Docker.'
+                    }]
+                })
 
                 let webhook = new WebhookClient({ url: this.webhookUrl });
                 webhook.send({ content: `:crystal_ball: ${bold('Monolith')} is restarting for an update.` });

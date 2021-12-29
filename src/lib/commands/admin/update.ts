@@ -24,7 +24,7 @@ export class UpdateCommand extends AutowiredCommand<UpdateManager> {
             return CommandReturn.HELP_MENU;
 
         await this.module.runUpdate(
-            res => this.reply(message, this.embeds.build('Monolith Instance Manager', EmbedIconType.TEST, `Sent update signal.\n${emboss(res)}`)),
+            () => this.reply(message, this.embeds.build('Monolith Instance Manager', EmbedIconType.TEST, `Sent update signal.`)),
             reason => this.reply(message, this.embeds.build('Monolith Instance Manager', EmbedIconType.TEST, `Failed to invoke update signal:\n${emboss(reason)}`, [], message)
         ));
 
