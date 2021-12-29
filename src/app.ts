@@ -29,6 +29,7 @@ import {
     RoleAssignmentManager,
     TaskScheduler,
     UConnCourseDataProvider,
+    UpdateManager,
     WelcomeManager
 } from './lib/modules';
 
@@ -41,6 +42,7 @@ import {
     BirthdayCommand,
     BuildInfoCommand,
     ChunksCommand,
+    CourseCommand,
     DinnerHallSyncCommand,
     EyebrowCommand,
     FlowCommand,
@@ -62,6 +64,7 @@ import {
     RoleAdminCommand,
     RoleListCommand,
     SudoCommand,
+    UpdateCommand,
     VersionCommand
 } from './lib/commands';
 
@@ -91,7 +94,6 @@ import {
     VoiceStateUpdateProbe,
     WebhookUpdateProbe
 } from './lib/modules/auditor/probes';
-import { CourseCommand } from './lib/commands/uconn';
 
 export class MonolithApp extends IvyEngine {
     
@@ -181,6 +183,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new RoleAdminCommand());
         this.registerCommand(new RoleListCommand());
         this.registerCommand(new SudoCommand())
+        this.registerCommand(new UpdateCommand())
         this.registerCommand(new VersionCommand());
     }
     
@@ -226,6 +229,9 @@ export class MonolithApp extends IvyEngine {
         this.registerModule(new DinnerHallManager());
         this.registerModule(new BirthdayManager());
         this.registerModule(new LevelManager());
+        this.registerModule(new UpdateManager());
+
+        // UConn-related modules
         this.registerModule(new UConnCourseDataProvider());
     }
     

@@ -14,3 +14,4 @@ export * from './admin';
 export * from './fun';
 export * from './info';
 export * from './roles';
+export * from './uconn';

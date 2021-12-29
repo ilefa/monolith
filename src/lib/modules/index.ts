@@ -17,4 +17,5 @@ export * from './prefs';
 export * from './roles';
 export * from './scheduler';
 export * from './uconn';
+export * from './update';
 export * from './welcome';
