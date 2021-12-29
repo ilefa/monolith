@@ -47,6 +47,9 @@ export class UpdateManager extends Module {
             .post('http://172.17.0.1:3000/update')
             .then(then)
             .then(_ => {
+                let webhook = new WebhookClient({ url: this.webhookUrl });
+                webhook.send({ content: `:crystal_ball: ${bold('Monolith')} is restarting for an update.` });
+
                 this.client.user.setPresence({
                     status: 'dnd',
                     activities: [{
@@ -54,9 +57,6 @@ export class UpdateManager extends Module {
                         name: 'with updates.'
                     }]
                 })
-
-                let webhook = new WebhookClient({ url: this.webhookUrl });
-                webhook.send({ content: `:crystal_ball: ${bold('Monolith')} is restarting for an update.` });
             })
             .catch(failure);
 
