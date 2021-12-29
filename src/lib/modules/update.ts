@@ -11,11 +11,11 @@ import axios from 'axios';
 
 import { PreferenceBundle } from '.';
 import { bold, Module } from '@ilefa/ivy';
+import { WebhookClient } from 'discord.js';
 
 export class UpdateManager extends Module {
  
     private webhookUrl: string;
-    private webhookId: string;
 
     constructor() {
         super('UpdateManager', 'Update');
@@ -37,7 +37,6 @@ export class UpdateManager extends Module {
         }
 
         this.webhookUrl = bundle.statusWebhook;
-        this.webhookId = this.webhookUrl.split('/').pop();
     }
 
     end() {}
@@ -54,10 +53,8 @@ export class UpdateManager extends Module {
                     }]
                 })
 
-                this
-                    .client
-                    .fetchWebhook(this.webhookUrl)
-                    .then(webhook => webhook.send(`:crystal_ball: ${bold('Monolith')} is restarting for an update.`))
+                let webhook = new WebhookClient({ url: this.webhookUrl });
+                webhook.send({ content: `:crystal_ball: ${bold('Monolith')} is restarting for an update.` });
             })
             .catch(_ => null);
 
