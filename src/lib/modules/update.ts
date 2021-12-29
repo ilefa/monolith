@@ -47,7 +47,7 @@ export class UpdateManager extends Module {
             .post('https://172.17.0.1:3000/update')
             .then(_ => this
                 .client
-                .fetchWebhook(this.webhookId)
+                .fetchWebhook(this.webhookUrl)
                 .then(webhook => webhook.send(`:crystal_ball: ${bold('Monolith')} is restarting for an update.`)))
             .catch(_ => null);
 

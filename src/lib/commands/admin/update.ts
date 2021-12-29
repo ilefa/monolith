@@ -23,6 +23,7 @@ export class UpdateCommand extends AutowiredCommand<UpdateManager> {
             return CommandReturn.HELP_MENU;
 
         await this.module.runUpdate();
+        return CommandReturn.EXIT;
     }
 
 }
