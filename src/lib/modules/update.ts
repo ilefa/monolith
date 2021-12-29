@@ -45,12 +45,13 @@ export class UpdateManager extends Module {
     runUpdate = (then: () => void, failure: (message: any) => void) =>
         axios
             .post('http://172.17.0.1:3000/update')
+            .then(then)
             .then(_ => {
                 this.client.user.setPresence({
                     status: 'dnd',
                     activities: [{
                         type: 'PLAYING',
-                        name: 'with Docker.'
+                        name: 'with updates.'
                     }]
                 })
 

@@ -11,7 +11,7 @@ import { StartupInjector } from './lib/startup';
 import { bold, IvyEngine, Logger } from '@ilefa/ivy';
 import { DatabaseManager, RemotePreferenceBundle } from './lib/database';
 import { Client, ColorResolvable, Intents, WebhookClient } from 'discord.js';
-import { COMMIT_HASH, DEPLOYMENT_SITE, DISPLAY_VERSION, MANAGED, RELEASE_CHANNEL } from './build';
+import { COMMIT_HASH, DISPLAY_VERSION, HOST, MANAGED, RELEASE_CHANNEL } from './build';
 
 import {
     BirthdayAnnounceTask,
@@ -155,7 +155,7 @@ export class MonolithApp extends IvyEngine {
         
         if (MANAGED) {
             let webhook = new WebhookClient({ url: this.prefs.statusWebhook });
-            webhook.send(`:ditto: ${bold('Monolith')} was deployed on ${bold(DEPLOYMENT_SITE)} (v${DISPLAY_VERSION} :: ${COMMIT_HASH} → @ilefa/monolith:${RELEASE_CHANNEL})`);
+            webhook.send(`<a:ditto:925118470545342564> ${bold('Monolith')} was deployed on ${bold(HOST)} (v${DISPLAY_VERSION} :: ${COMMIT_HASH} → @ilefa/monolith:${RELEASE_CHANNEL})`);
         }
     }
 

@@ -7,6 +7,7 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
+import { MANAGED } from '../../../build';
 import { Message, User } from 'discord.js';
 import { EmbedIconType } from '../../util';
 import { UpdateManager } from '../../modules';
@@ -23,8 +24,15 @@ export class UpdateCommand extends AutowiredCommand<UpdateManager> {
         if (args.length !== 0)
             return CommandReturn.HELP_MENU;
 
+        if (!MANAGED) {
+            this.reply(message, this.embeds.build('Monolith Instance Manager', EmbedIconType.TEST, 'This module is only available for managed instances.', [], message));
+            return CommandReturn.EXIT;
+        }
+
+        let msg = await this.reply(message, this.embeds.build('Monolith Instance Manager', EmbedIconType.TEST, 'Dispatching update signal to the instance manager..'))
+
         await this.module.runUpdate(
-            () => this.reply(message, this.embeds.build('Monolith Instance Manager', EmbedIconType.TEST, `Sent update signal.`)),
+            () => msg.edit({ embeds: [this.embeds.build('Monolith Instance Manager', EmbedIconType.TEST, `Update dispatched.`)] }),
             reason => this.reply(message, this.embeds.build('Monolith Instance Manager', EmbedIconType.TEST, `Failed to invoke update signal:\n${emboss(reason)}`, [], message)
         ));
 

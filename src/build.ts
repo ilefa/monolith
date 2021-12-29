@@ -23,4 +23,3 @@ export const HOST = buildInfo.device;
 export const BUILT_AT = buildInfo.time;
 export const PRESET = process.env.PRESET;
 export const MANAGED = !!process.env.MANAGED;
-export const DEPLOYMENT_SITE = process.env.DEPLOYMENT_SITE ?? 'unknown';
