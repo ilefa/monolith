@@ -45,10 +45,20 @@ export class UpdateManager extends Module {
     runUpdate = () =>
         axios
             .post('https://172.17.0.1:3000/update')
-            .then(_ => this
-                .client
-                .fetchWebhook(this.webhookUrl)
-                .then(webhook => webhook.send(`:crystal_ball: ${bold('Monolith')} is restarting for an update.`)))
+            .then(_ => {
+                this.client.user.setPresence({
+                    status: 'dnd',
+                    activities: [{
+                        type: 'PLAYING',
+                        name: 'with Docker.'
+                    }]
+                })
+
+                this
+                    .client
+                    .fetchWebhook(this.webhookUrl)
+                    .then(webhook => webhook.send(`:crystal_ball: ${bold('Monolith')} is restarting for an update.`))
+            })
             .catch(_ => null);
 
 }
