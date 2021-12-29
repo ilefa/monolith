@@ -8,9 +8,10 @@
  */
 
 import { StartupInjector } from './lib/startup';
-import { IvyEngine, Logger } from '@ilefa/ivy';
-import { Client, ColorResolvable, Intents } from 'discord.js';
+import { bold, IvyEngine, Logger } from '@ilefa/ivy';
 import { DatabaseManager, RemotePreferenceBundle } from './lib/database';
+import { Client, ColorResolvable, Intents, WebhookClient } from 'discord.js';
+import { COMMIT_HASH, DEPLOYMENT_SITE, DISPLAY_VERSION, MANAGED, RELEASE_CHANNEL } from './build';
 
 import {
     BirthdayAnnounceTask,
@@ -151,6 +152,11 @@ export class MonolithApp extends IvyEngine {
 
     onReady(_client: Client) {
         this.registerEventHandler(new CustomEventManager(this, this.commandManager, this.pollManager));
+        
+        if (MANAGED) {
+            let webhook = new WebhookClient({ url: this.prefs.statusWebhook });
+            webhook.send(`:ditto: ${bold('Monolith')} was deployed on ${bold(DEPLOYMENT_SITE)} (v${DISPLAY_VERSION} :: ${COMMIT_HASH} → @ilefa/monolith:${RELEASE_CHANNEL})`);
+        }
     }
 
     registerCommands() {
