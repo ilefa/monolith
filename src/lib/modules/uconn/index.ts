@@ -8,4 +8,5 @@
  */
 
 export * from './course';
+export * from './professor';
 export * from './room';

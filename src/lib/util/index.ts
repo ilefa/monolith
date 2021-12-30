@@ -100,6 +100,33 @@ export const COMPARISON_LEGEND = [
     ":purple_circle:"
 ];
 
+export const RMP_TAG_PROS = [
+    'gives good feedback',
+    'respected',
+    'accessible outside class',
+    'inspirational',
+    'clear grading criteria',
+    'hilarious',
+    'amazing lectures',
+    'caring',
+    'extra credit',
+    'would take again',
+    'tests? not many'
+];
+
+export const RMP_TAG_CONS = [
+    'lots of homework',
+    'get ready to read',
+    'participation matters',
+    'skip class? you won\'t pass.',
+    'graded by few things',
+    'test heavy',
+    'beware of pop quizzes',
+    'lecture heavy',
+    'so many papers',
+    'tough grader'
+];
+
 /**
  * Generates a change string for stock prices.
  * 

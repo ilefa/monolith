@@ -30,6 +30,7 @@ import {
     RoleAssignmentManager,
     TaskScheduler,
     UConnCourseDataProvider,
+    UConnProfessorDataProvider,
     UConnRoomDataProvider,
     UpdateManager,
     WelcomeManager
@@ -60,6 +61,7 @@ import {
     MisogynyCommand,
     PollCommand,
     PrefsCommand,
+    ProfessorCommand,
     PurgeCommand,
     RankCommand,
     RerollCommand,
@@ -186,6 +188,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new MisogynyCommand());
         this.registerCommand(new PollCommand());
         this.registerCommand(new PrefsCommand());
+        this.registerCommand(new ProfessorCommand());
         this.registerCommand(new PurgeCommand());
         this.registerCommand(new RankCommand());
         this.registerCommand(new RerollCommand());
@@ -204,6 +207,7 @@ export class MonolithApp extends IvyEngine {
         this.registerModule(this.pollManager = new PollManager());
         this.registerModule(this.roleManager = new RoleAssignmentManager());
     
+        // Auditor
         this.registerModule(this.auditor = new Auditor());
         this.auditor.registerProbe(new ChannelCreateProbe());
         this.auditor.registerProbe(new ChannelDeleteProbe());
@@ -230,6 +234,7 @@ export class MonolithApp extends IvyEngine {
         this.auditor.registerProbe(new VoiceStateUpdateProbe());
         this.auditor.registerProbe(new WebhookUpdateProbe());
 
+        // Task Scheduler
         this.scheduler = new TaskScheduler();
         this.scheduler.schedule({ interval: '0 0 * * *', task: new ServerRenameTask() });
         this.scheduler.schedule({ interval: '0 0 * * *', task: new BlueplateRefreshTask() });
@@ -244,6 +249,7 @@ export class MonolithApp extends IvyEngine {
 
         // UConn-related modules
         this.registerModule(new UConnCourseDataProvider());
+        this.registerModule(new UConnProfessorDataProvider());
         this.registerModule(new UConnRoomDataProvider());
     }
     
