@@ -65,6 +65,7 @@ export class Dispatcher extends Module {
             .then(client.destroy)
             .catch(err => {
                 this.except(err, 'Could not dispatch status');
+                console.log(err);
                 client.destroy();
             });
     }

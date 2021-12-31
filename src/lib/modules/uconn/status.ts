@@ -154,10 +154,16 @@ export class UConnStatusRepository extends Module {
         let channel = await this.client.channels.fetch(this.channelId) as TextChannel;
         let all = await this.get(true);
 
+        let status = all.every(s => s.status === UConnServiceStatus.OPERATIONAL) 
+            ? 'All services are currently operational.'
+            : all.every(s => s.status !== UConnServiceStatus.OUTAGE) && all.some(s => s.status === UConnServiceStatus.DEGRADED)
+                ? 'Some services are currently experiencing performance degradation.'
+                : 'Some services are currently unavailable as a result of an outage.';
+
         let message = (await channel.messages.fetch({ limit: 1 })).first();
         let embed = this.manager.engine.embeds.build('System Status', EmbedIconType.PREFS,
             `${bold('At a glance')}\n` 
-          + ``,
+                + status + '\n',
             all.map(entry => ({
                 name: `${UConnServiceEmotes[entry.service.toUpperCase()]} ${SERVICES.find(s => s.key.toLowerCase() === entry.service).name}`,
                 value: `${ServiceStatusEmote[entry.status.toUpperCase()]} ${entry.status}`,
@@ -165,7 +171,7 @@ export class UConnStatusRepository extends Module {
 
         if (!message)
             return channel.send({ embeds: [embed] });
-            
+
         message.edit({ embeds: [embed] });
     }
 
