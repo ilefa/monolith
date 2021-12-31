@@ -163,6 +163,9 @@ export class UConnStatusRepository extends Module {
                 value: `${ServiceStatusEmote[entry.status.toUpperCase()]} ${entry.status}`,
                 inline: false })));
 
+        if (!message)
+            return channel.send({ embeds: [embed] });
+            
         message.edit({ embeds: [embed] });
     }
 
