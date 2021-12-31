@@ -47,7 +47,6 @@ export class Dispatcher extends Module {
         let client = this.createClient('alert');
         client
             .send(message)
-            .then(client.destroy)
             .catch(err => {
                 this.except(err, 'Could not dispatch alert');
                 client.destroy();
@@ -62,10 +61,8 @@ export class Dispatcher extends Module {
         let client = this.createClient('status');
         client
             .send(message)
-            .then(client.destroy)
             .catch(err => {
                 this.except(err, 'Could not dispatch status');
-                console.log(err);
                 client.destroy();
             });
     }
