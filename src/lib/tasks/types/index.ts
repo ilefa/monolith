@@ -10,3 +10,4 @@
 export * from './birthday';
 export * from './dining';
 export * from './rename';
+export * from './status';

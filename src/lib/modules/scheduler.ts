@@ -9,9 +9,11 @@
 
 import scheduler from 'node-schedule';
 
+import { Dispatcher } from '.';
 import { Job } from 'node-schedule';
 import { TaskEntry } from '../tasks';
-import { conforms, Module } from '@ilefa/ivy';
+import { getSystemTimezone } from '../util';
+import { bold, conforms, Module } from '@ilefa/ivy';
 
 export class TaskScheduler extends Module {
 
@@ -30,9 +32,16 @@ export class TaskScheduler extends Module {
             .registeredTasks
             .forEach(entry => this
                 .scheduledJobs
-                .set(entry.task.id,scheduler.scheduleJob(entry.interval, entry.task.run)));
+                .set(entry.task.id, scheduler.scheduleJob(entry.interval, entry.task.run)));
 
-        this.log(`Scheduled ${this.registeredTasks.length} tasks.`)
+        this.registeredTasks.forEach(({ task }) => task.start());
+        this.log(`Scheduled ${this.registeredTasks.length} tasks.`);
+
+        let timezone = getSystemTimezone();
+        if (timezone !== 'America/New_York') {
+            let dispatcher = this.manager.require<Dispatcher>('Dispatcher');
+            dispatcher.sendAlert(`:warning: The system timezone is not set to ${bold('America/New_York')} - this will cause problems with scheduled tasks.`);
+        }
     }
 
     end = () => this.registeredTasks.forEach(entry => {

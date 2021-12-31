@@ -282,7 +282,7 @@ export const isSuperPerms = (engine: IvyEngine, user: User | string) =>
  * @param time the time to convert
  * @param date the initial date (or now)
  */
- export const getDateFromTime = (time: string, date = new Date()) => {
+export const getDateFromTime = (time: string, date = new Date()) => {
     let offset = time.split(':')[0].length;
     let hours = parseInt(time.substring(0, offset));
     if (hours !== 12 && time.includes('PM'))
@@ -295,3 +295,8 @@ export const isSuperPerms = (engine: IvyEngine, user: User | string) =>
                     parseInt(time.substring(offset + 1, offset + 3)),
                     0, 0);
 }
+
+/**
+ * Returns the system timezone.
+ */
+export const getSystemTimezone = () => Intl.DateTimeFormat().resolvedOptions().timeZone;

@@ -10,6 +10,7 @@
 export * from './auditor';
 export * from './birthday';
 export * from './dining';
+export * from './dispatcher';
 export * from './events';
 export * from './levels';
 export * from './poll';

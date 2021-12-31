@@ -9,14 +9,15 @@
 
 import { StartupInjector } from './lib/startup';
 import { bold, IvyEngine, Logger } from '@ilefa/ivy';
+import { Client, ColorResolvable, Intents } from 'discord.js';
 import { DatabaseManager, RemotePreferenceBundle } from './lib/database';
-import { Client, ColorResolvable, Intents, WebhookClient } from 'discord.js';
 import { COMMIT_HASH, DISPLAY_VERSION, HOST, MANAGED, RELEASE_CHANNEL } from './build';
 
 import {
     BirthdayAnnounceTask,
     BlueplateRefreshTask,
-    ServerRenameTask
+    ServerRenameTask,
+    UConnStatusFetcher
 } from './lib/tasks';
 
 import {
@@ -24,6 +25,7 @@ import {
     BirthdayManager,
     CustomEventManager,
     DinnerHallManager,
+    Dispatcher,
     LevelManager,
     PollManager,
     PreferenceBundle,
@@ -32,6 +34,7 @@ import {
     UConnCourseDataProvider,
     UConnProfessorDataProvider,
     UConnRoomDataProvider,
+    UConnStatusRepository,
     UpdateManager,
     WelcomeManager
 } from './lib/modules';
@@ -104,6 +107,7 @@ import {
 export class MonolithApp extends IvyEngine {
     
     auditor: Auditor;
+    dispatcher: Dispatcher;
     pollManager: PollManager;
     roleManager: RoleAssignmentManager;
     database: DatabaseManager;
@@ -157,10 +161,7 @@ export class MonolithApp extends IvyEngine {
     onReady(_client: Client) {
         this.registerEventHandler(new CustomEventManager(this, this.commandManager, this.pollManager));
         
-        if (MANAGED) {
-            let webhook = new WebhookClient({ url: this.prefs.statusWebhook });
-            webhook.send(`<a:ditto:925118470545342564> ${bold('Monolith')} was deployed on ${bold(HOST)} (v${DISPLAY_VERSION} :: ${COMMIT_HASH} → @ilefa/monolith:${RELEASE_CHANNEL})`);
-        }
+        if (MANAGED) this.dispatcher.sendStatus(`<a:ditto:925118470545342564> ${bold('Monolith')} was deployed on ${bold(HOST)} (v${DISPLAY_VERSION} :: ${COMMIT_HASH} → @ilefa/monolith:${RELEASE_CHANNEL})`);
     }
 
     registerCommands() {
@@ -204,6 +205,7 @@ export class MonolithApp extends IvyEngine {
     registerModules() {
         this.registerModule(this.bundle = new PreferenceBundle(this.prefs));
         this.registerModule(this.database = new DatabaseManager(this.logger));
+        this.registerModule(this.dispatcher = new Dispatcher());
         this.registerModule(this.pollManager = new PollManager());
         this.registerModule(this.roleManager = new RoleAssignmentManager());
     
@@ -234,13 +236,6 @@ export class MonolithApp extends IvyEngine {
         this.auditor.registerProbe(new VoiceStateUpdateProbe());
         this.auditor.registerProbe(new WebhookUpdateProbe());
 
-        // Task Scheduler
-        this.scheduler = new TaskScheduler();
-        this.scheduler.schedule({ interval: '0 0 * * *', task: new ServerRenameTask() });
-        this.scheduler.schedule({ interval: '0 0 * * *', task: new BlueplateRefreshTask() });
-        this.scheduler.schedule({ interval: '0 0 * * *', task: new BirthdayAnnounceTask() });
-
-        this.registerModule(this.scheduler);
         this.registerModule(new WelcomeManager());
         this.registerModule(new DinnerHallManager());
         this.registerModule(new BirthdayManager());
@@ -251,6 +246,15 @@ export class MonolithApp extends IvyEngine {
         this.registerModule(new UConnCourseDataProvider());
         this.registerModule(new UConnProfessorDataProvider());
         this.registerModule(new UConnRoomDataProvider());
+        this.registerModule(new UConnStatusRepository());
+
+        // Task Scheduler
+        this.scheduler = new TaskScheduler();
+        this.scheduler.schedule({ interval: '0 0 * * *', task: new ServerRenameTask() });
+        this.scheduler.schedule({ interval: '0 0 * * *', task: new BlueplateRefreshTask() });
+        this.scheduler.schedule({ interval: '0 0 * * *', task: new BirthdayAnnounceTask() });
+        this.scheduler.schedule({ interval: '* * * * *', task: new UConnStatusFetcher() });
+        this.registerModule(this.scheduler);
     }
     
     registerFlows() {}

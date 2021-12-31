@@ -14,7 +14,6 @@ import { addTrailingDecimal, EmbedIconType, RMP_TAG_CONS, RMP_TAG_PROS } from '.
 
 import {
     bold,
-    capitalizeFirst,
     CommandReturn,
     emboss,
     link,
@@ -94,7 +93,7 @@ export class ProfessorCommand extends AutowiredCommand<UConnProfessorDataProvide
 
                 // dispatch
                 let report = await this.module.getProfessor(selected.target);
-                this.reply(message, await this.generateReply(message, report, capitalizeFirst(selected.target)));
+                this.reply(message, await this.generateReply(message, report, this.getTargetName(selected.target)));
             })
             .catch(() => {
                 message.reply(`:hourglass: Professor selection timed out.`);

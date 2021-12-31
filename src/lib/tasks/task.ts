@@ -7,7 +7,6 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
-import { v4 as uuid } from 'uuid';
 import { TaskScheduler } from '../modules';
 
 export interface Runnable {
@@ -19,6 +18,11 @@ export abstract class Task implements Runnable {
     public scheduler: TaskScheduler;
 
     constructor(public id: string) {}
+
+    /**
+     * Fired after the task is registered and scheduled.
+     */
+    start(): void {}
 
     /**
      * Fired when the interval is met by the task scheduler.

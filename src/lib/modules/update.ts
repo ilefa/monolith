@@ -9,13 +9,12 @@
 
 import axios from 'axios';
 
-import { PreferenceBundle } from '.';
+import { Dispatcher } from '.';
 import { bold, Module } from '@ilefa/ivy';
-import { WebhookClient } from 'discord.js';
 
 export class UpdateManager extends Module {
  
-    private webhookUrl: string;
+    private dispatcher: Dispatcher;
 
     constructor() {
         super('UpdateManager', 'Update');
@@ -29,14 +28,14 @@ export class UpdateManager extends Module {
             return;
         }
 
-        let bundle = this.manager.require<PreferenceBundle>('Prefs');
-        if (!bundle) {
+        let dispatcher = this.manager.require<Dispatcher>('Dispatcher');
+        if (!dispatcher) {
             this.manager.unregisterModule(this);
-            this.warn('Could not retrieve preference bundle.');
+            this.warn('Could not retrieve the dispatcher.');
             return;
         }
 
-        this.webhookUrl = bundle.statusWebhook;
+        this.dispatcher = dispatcher;
         this.log('Update Manager is ready.');
     }
 
@@ -47,9 +46,7 @@ export class UpdateManager extends Module {
             .post('http://172.17.0.1:3000/update')
             .then(then)
             .then(_ => {
-                let webhook = new WebhookClient({ url: this.webhookUrl });
-                webhook.send({ content: `:crystal_ball: ${bold('Monolith')} is restarting for an update.` });
-
+                this.dispatcher.sendStatus({ content: `:crystal_ball: ${bold('Monolith')} is restarting for an update.` });
                 this.client.user.setPresence({
                     status: 'dnd',
                     activities: [{

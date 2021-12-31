@@ -25,7 +25,9 @@ export class PreferenceBundle extends Module {
     public readonly starboardChannelId: string;
     public readonly nameArchiveChannelId: string;
     public readonly levelUpChannelId: string;
+    public readonly alertsWebhook: string;
     public readonly statusWebhook: string;
+    public readonly statusChannelId: string;
     public readonly superPerms: string[];
 
     constructor(bundle: RemotePreferenceBundle) {
@@ -43,7 +45,9 @@ export class PreferenceBundle extends Module {
         this.starboardChannelId = bundle.starboardChannelId;
         this.nameArchiveChannelId = bundle.nameArchiveChannelId;
         this.levelUpChannelId = bundle.levelUpChannelId;
+        this.alertsWebhook = bundle.alertsWebhook;
         this.statusWebhook = bundle.statusWebhook;
+        this.statusChannelId = bundle.statusChannelId;
         this.superPerms = bundle.superPerms;
     }
 

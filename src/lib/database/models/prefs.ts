@@ -53,7 +53,13 @@ export class RemotePreferenceBundle {
     levelUpChannelId: string;
 
     @prop({ required: true })
+    alertsWebhook: string;
+
+    @prop({ required: true })
     statusWebhook: string;
+
+    @prop({ required: true })
+    statusChannelId: string;
 
     @prop({ required: true, type: () => [String] })
     superPerms: string[];
