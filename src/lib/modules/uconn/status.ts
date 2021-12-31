@@ -10,7 +10,7 @@
 import { PreferenceBundle } from '..';
 import { TextChannel } from 'discord.js';
 import { EmbedIconType } from '../../util';
-import { bold, Module, Stash } from '@ilefa/ivy';
+import { bold, link, Module, Stash } from '@ilefa/ivy';
 import { UConnService, UConnServiceStatus } from '@ilefa/husky';
 
 export type StatusReport = {
@@ -154,11 +154,12 @@ export class UConnStatusRepository extends Module {
         let channel = await this.client.channels.fetch(this.channelId) as TextChannel;
         let all = await this.get(true);
 
+        let moreInfo = `For more information, check out the ${link('IT Status', 'https://itstatus.uconn.edu/')} website.`;
         let status = all.every(s => s.status === UConnServiceStatus.OPERATIONAL) 
             ? 'All services are currently operational.'
             : all.every(s => s.status !== UConnServiceStatus.OUTAGE) && all.some(s => s.status === UConnServiceStatus.DEGRADED)
-                ? 'Some services are currently experiencing performance degradation.'
-                : 'Some services are currently unavailable as a result of an outage.';
+                ? `Some services are currently experiencing performance degradation.\n${moreInfo}`
+                : `Some services are currently unavailable as a result of an outage.\n${moreInfo}`;
 
         let message = (await channel.messages.fetch({ limit: 1 })).first();
         let embed = this.manager.engine.embeds.build('System Status', EmbedIconType.PREFS,
@@ -167,7 +168,8 @@ export class UConnStatusRepository extends Module {
             all.map(entry => ({
                 name: `${UConnServiceEmotes[entry.service.toUpperCase()]} ${SERVICES.find(s => s.key.toLowerCase() === entry.service).name}`,
                 value: `${ServiceStatusEmote[entry.status.toUpperCase()]} ${entry.status}`,
-                inline: false })));
+                inline: false
+            })));
 
         if (!message)
             return channel.send({ embeds: [embed] });

@@ -109,7 +109,7 @@ export class DinnerHallManager extends Module {
         }
 
         let embed = this.manager.engine.embeds.build('Dinner Halls', EmbedIconType.UCONN, '', items.map(item => ({ name: item.emote + ' ' + item.name, value: item.link, inline: false })));
-        channel.send({ embeds: [embed] })
+        channel.send({ embeds: [embed] });
     }
 
 }
