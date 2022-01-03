@@ -8,7 +8,7 @@
  */
 
 import { AuditorProbe } from '..';
-import { Message } from 'discord.js';
+import { Message, Util } from 'discord.js';
 import { bold, codeBlock, conforms, mentionChannel } from '@ilefa/ivy';
 
 export class MessageUpdateProbe extends AuditorProbe {
@@ -27,11 +27,14 @@ export class MessageUpdateProbe extends AuditorProbe {
         reports.send(`${this.manager.CHANNEL} Message in ${mentionChannel(message.channel.id)} was edited by ${bold(this.asName(message.author))}.\n` 
                    + `${this.manager.DIVIDER} Message Link: https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}\n` 
                    + `${this.manager.DIVIDER} Original Content:`);
-                   
+        
         // make sure the message can fit in the code block
-        reports.send(codeBlock('', message.content.length === 2000
-            ? message.content.substring(0, message.content.length - 9)
-            : message.content));
+        let originallyCodeBlock = message.content.startsWith('```');
+        let content = Util.splitMessage(originallyCodeBlock
+            ? message.content
+            : codeBlock('', message.content));
+
+        content.forEach(entry => reports.send(entry));
     }
 
     shouldReport = (...args: any[]): boolean => {

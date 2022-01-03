@@ -12,6 +12,7 @@ export * from './birthday';
 export * from './dining';
 export * from './dispatcher';
 export * from './events';
+export * from './inviter';
 export * from './levels';
 export * from './poll';
 export * from './prefs';

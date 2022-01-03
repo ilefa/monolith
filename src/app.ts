@@ -26,6 +26,7 @@ import {
     CustomEventManager,
     DinnerHallManager,
     Dispatcher,
+    InviteTracker,
     LevelManager,
     PollManager,
     PreferenceBundle,
@@ -237,6 +238,7 @@ export class MonolithApp extends IvyEngine {
         this.auditor.registerProbe(new WebhookUpdateProbe());
 
         this.registerModule(new WelcomeManager());
+        this.registerModule(new InviteTracker());
         this.registerModule(new DinnerHallManager());
         this.registerModule(new BirthdayManager());
         this.registerModule(new LevelManager());

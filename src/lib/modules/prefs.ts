@@ -28,6 +28,7 @@ export class PreferenceBundle extends Module {
     public readonly alertsWebhook: string;
     public readonly statusWebhook: string;
     public readonly statusChannelId: string;
+    public readonly inviterChannelId: string;
     public readonly superPerms: string[];
 
     constructor(bundle: RemotePreferenceBundle) {
@@ -48,6 +49,7 @@ export class PreferenceBundle extends Module {
         this.alertsWebhook = bundle.alertsWebhook;
         this.statusWebhook = bundle.statusWebhook;
         this.statusChannelId = bundle.statusChannelId;
+        this.inviterChannelId = bundle.inviterChannelId;
         this.superPerms = bundle.superPerms;
     }
 

@@ -8,7 +8,7 @@
  */
 
 import { AuditorProbe } from '..';
-import { Message } from 'discord.js';
+import { Message, Util } from 'discord.js';
 
 import {
     asEmote,
@@ -65,9 +65,12 @@ export class MessageDeleteProbe extends AuditorProbe {
                    + `${this.manager.DIVIDER} Original content:`);
 
         // make sure the message can fit in the code block
-        reports.send(codeBlock('', message.content.length === 2000
-            ? message.content.substring(0, message.content.length - 9)
-            : message.content));
+        let originallyCodeBlock = message.content.startsWith('```');
+        let content = Util.splitMessage(originallyCodeBlock
+            ? message.content
+            : codeBlock('', message.content));
+
+        content.forEach(entry => reports.send(entry));
     }
 
     shouldReport = (...args: any[]): boolean => {

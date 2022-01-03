@@ -100,7 +100,7 @@ export class GuildUpdateProbe extends AuditorProbe {
 
     private generateChangeMessage = async (a: Guild, b: Guild, cause: GuildUpdateCause) => {
         let report = await this.getAuditEntry(a, 'GUILD_UPDATE');
-        let executor = this.asName(report.executor);
+        let executor = this.asName(report?.executor);
 
         if (cause == GuildUpdateCause.UNKNOWN)
             return `${this.manager.COG} ${bold(b.name)} was somehow updated by ${bold(executor)}.`;

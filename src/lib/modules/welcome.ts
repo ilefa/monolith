@@ -51,7 +51,7 @@ export class WelcomeManager extends Module {
             return;
 
         this.channel.send(`Welcome to ${bold('AF')}, ${asMention(member.user)}!`
-            + `\n:blue_book: Read about the server, our rules, and assign your roles in ${mentionChannel('922014878116503572')}.`);
+            + `\n:blue_book: Read about the server, our rules, and assign your roles in ${mentionChannel(member.guild.rulesChannelId)}.`);
     }
 
 }

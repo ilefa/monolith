@@ -61,6 +61,9 @@ export class RemotePreferenceBundle {
     @prop({ required: true })
     statusChannelId: string;
 
+    @prop({ required: true })
+    inviterChannelId: string;
+
     @prop({ required: true, type: () => [String] })
     superPerms: string[];
 
