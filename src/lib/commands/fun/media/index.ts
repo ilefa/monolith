@@ -5,6 +5,7 @@ export * from './chunks';
 export * from './eyebrow';
 export * from './getreal';
 export * from './gigachad';
+export * from './how';
 export * from './mald';
 export * from './misogyny';
 export * from './rock';

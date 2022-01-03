@@ -57,6 +57,7 @@ import {
     GetRealCommand,
     GigachadCommand,
     HelpCommand,
+    HowCommand,
     InvitesCommand,
     KingCommand,
     LeaderboardCommand,
@@ -182,6 +183,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new GetRealCommand());
         this.registerCommand(new GigachadCommand());
         this.registerCommand(new HelpCommand());
+        this.registerCommand(new HowCommand());
         this.registerCommand(new InvitesCommand());
         this.registerCommand(new KingCommand());
         this.registerCommand(new LeaderboardCommand());
