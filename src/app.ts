@@ -54,6 +54,7 @@ import {
     DinnerHallSyncCommand,
     EmoteCommand,
     EyebrowCommand,
+    FedCommand,
     FlowCommand,
     GetRealCommand,
     GigachadCommand,
@@ -181,6 +182,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new DinnerHallSyncCommand());
         this.registerCommand(new EmoteCommand());
         this.registerCommand(new EyebrowCommand());
+        this.registerCommand(new FedCommand());
         this.registerCommand(new FlowCommand());
         this.registerCommand(new GetRealCommand());
         this.registerCommand(new GigachadCommand());
