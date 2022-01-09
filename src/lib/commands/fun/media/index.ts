@@ -2,6 +2,7 @@ export * from './alina';
 export * from './bigjannie';
 export * from './bingqiling';
 export * from './chunks';
+export * from './cringe';
 export * from './eyebrow';
 export * from './getreal';
 export * from './gigachad';

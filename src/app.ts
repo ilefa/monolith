@@ -50,6 +50,7 @@ import {
     BuildInfoCommand,
     ChunksCommand,
     CourseCommand,
+    CringeCommand,
     DinnerHallSyncCommand,
     EmoteCommand,
     EyebrowCommand,
@@ -176,6 +177,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new BuildInfoCommand());
         this.registerCommand(new ChunksCommand());
         this.registerCommand(new CourseCommand());
+        this.registerCommand(new CringeCommand());
         this.registerCommand(new DinnerHallSyncCommand());
         this.registerCommand(new EmoteCommand());
         this.registerCommand(new EyebrowCommand());
