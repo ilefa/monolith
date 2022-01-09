@@ -77,6 +77,7 @@ import {
     RoleListCommand,
     RoomCommand,
     SudoCommand,
+    SummonCommand,
     UpdateCommand,
     VersionCommand
 } from './lib/commands';
@@ -205,6 +206,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new RoleListCommand());
         this.registerCommand(new RoomCommand());
         this.registerCommand(new SudoCommand())
+        this.registerCommand(new SummonCommand())
         this.registerCommand(new UpdateCommand())
         this.registerCommand(new VersionCommand());
     }

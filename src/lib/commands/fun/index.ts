@@ -11,3 +11,4 @@ export * from './birthday';
 export * from './chat';
 export * from './king';
 export * from './media';
+export * from './summon';
