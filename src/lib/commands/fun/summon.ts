@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2022 ILEFA Labs
+ * All Rights Reserved.
+ * 
+ * This software is proprietary and was designed and intended for internal use only.
+ * Unauthorized usage, dissemination, or replication of this software in part or in
+ * whole is unlawful, and punishable by the full extent of United States Copyright law.
+ */
+
 import { User, Message } from 'discord.js';
 import { CommandCategory } from '../system';
 import { asMention, Command, CommandReturn, findUser } from '@ilefa/ivy';
@@ -26,6 +35,8 @@ export class SummonCommand extends Command {
         let msg = await this.reply(message, asMention(target));
         if (timeout !== -1)
             setTimeout(() => msg.delete(), timeout);
+        
+        return CommandReturn.EXIT;
     }
 
 }
