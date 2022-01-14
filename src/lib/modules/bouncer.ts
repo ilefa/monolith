@@ -36,10 +36,14 @@ export class BouncerManager extends Module {
         
         this.serverId = bundle.serverId;
         this.channelId = bundle.inviterChannelId;
+        this.client.on('guildMemberAdd', async member => await this.onJoin(member));
+
         this.log('Bouncer is ready.');
     }
 
-    end() {}
+    end() {
+        this.client.off('guildMemberAdd', async member => await this.onJoin(member));
+    }
 
     /**
      * Returns a level bundle for a given user,
@@ -55,6 +59,9 @@ export class BouncerManager extends Module {
         let profile = await this
             .model
             .findOne({ userId });
+
+        if (!profile || !profile.userId)
+            return null;
 
         return profile;
     }

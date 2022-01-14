@@ -24,7 +24,7 @@ export class BlacklistCommand extends AutowiredCommand<BouncerManager> {
 
         message.delete();
             
-        if (args.length !== 0)
+        if (args.length !== 1)
             return CommandReturn.EXIT;
 
         let target = args[0];

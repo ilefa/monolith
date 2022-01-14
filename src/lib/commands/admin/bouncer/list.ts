@@ -8,8 +8,8 @@
  */
 
 import { User, Message } from 'discord.js';
+import { bold, CommandReturn } from '@ilefa/ivy';
 import { BouncerManager } from '../../../modules';
-import { bold, CommandReturn, emboss } from '@ilefa/ivy';
 import { AutowiredCommand, CommandCategory } from '../../system';
 
 export class ListBlacklistsCommand extends AutowiredCommand<BouncerManager> {
@@ -30,7 +30,8 @@ export class ListBlacklistsCommand extends AutowiredCommand<BouncerManager> {
         let list = await this.module.list();
         let channel = await user.createDM();
 
-        channel.send(`:loudspeaker: ${bold('Blacklisted users:')}\n` + list.map(line => `• ${emboss(line)}`).join('\n'));
+        channel.send(`:loudspeaker: ${bold('Blacklisted users:')}\n` + (list.length === 0 ? ' • None \:)' : list.map(line => ` • ${line}`).join('\n')));
+        return CommandReturn.EXIT;
     }
 
 }
