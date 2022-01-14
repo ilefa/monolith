@@ -22,10 +22,10 @@ export class BlacklistCommand extends AutowiredCommand<BouncerManager> {
         if (!this.engine.has(user, 'SUPER_PERMS', message.guild))
             return CommandReturn.EXIT;
 
-        message.delete();
-            
         if (args.length !== 1)
             return CommandReturn.EXIT;
+            
+        message.delete();
 
         let target = args[0];
         if (!target || !isSnowflake(target))

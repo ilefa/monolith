@@ -22,11 +22,11 @@ export class ListBlacklistsCommand extends AutowiredCommand<BouncerManager> {
         if (!this.engine.has(user, 'SUPER_PERMS', message.guild))
             return CommandReturn.EXIT;
 
-        message.delete();
-            
         if (args.length !== 0)
             return CommandReturn.EXIT;
-
+            
+        message.delete();
+        
         let list = await this.module.list();
         let channel = await user.createDM();
 
