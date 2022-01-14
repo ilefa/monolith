@@ -23,6 +23,7 @@ import {
 import {
     Auditor,
     BirthdayManager,
+    BouncerManager,
     CustomEventManager,
     DinnerHallManager,
     Dispatcher,
@@ -47,6 +48,7 @@ import {
     BigJannieCommand,
     BingQiLingCommand,
     BirthdayCommand,
+    BlacklistCommand,
     BuildInfoCommand,
     ChunksCommand,
     CourseCommand,
@@ -63,6 +65,7 @@ import {
     InvitesCommand,
     KingCommand,
     LeaderboardCommand,
+    ListBlacklistsCommand,
     MaldCommand,
     MembersCommand,
     MisogynyCommand,
@@ -78,6 +81,7 @@ import {
     RoomCommand,
     SudoCommand,
     SummonCommand,
+    UnblacklistCommand,
     UpdateCommand,
     VersionCommand
 } from './lib/commands';
@@ -176,6 +180,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new BigJannieCommand());
         this.registerCommand(new BingQiLingCommand());
         this.registerCommand(new BirthdayCommand());
+        this.registerCommand(new BlacklistCommand());
         this.registerCommand(new BuildInfoCommand());
         this.registerCommand(new ChunksCommand());
         this.registerCommand(new CourseCommand());
@@ -192,6 +197,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new InvitesCommand());
         this.registerCommand(new KingCommand());
         this.registerCommand(new LeaderboardCommand());
+        this.registerCommand(new ListBlacklistsCommand());
         this.registerCommand(new MaldCommand());
         this.registerCommand(new MembersCommand());
         this.registerCommand(new MisogynyCommand());
@@ -207,6 +213,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new RoomCommand());
         this.registerCommand(new SudoCommand())
         this.registerCommand(new SummonCommand())
+        this.registerCommand(new UnblacklistCommand())
         this.registerCommand(new UpdateCommand())
         this.registerCommand(new VersionCommand());
     }
@@ -251,6 +258,7 @@ export class MonolithApp extends IvyEngine {
         this.registerModule(new BirthdayManager());
         this.registerModule(new LevelManager());
         this.registerModule(new UpdateManager());
+        this.registerModule(new BouncerManager());
 
         // UConn-related modules
         this.registerModule(new UConnCourseDataProvider());

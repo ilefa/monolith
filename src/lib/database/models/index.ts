@@ -8,6 +8,7 @@
  */
 
 export * from './birthday';
+export * from './bouncer';
 export * from './level';
 export * from './prefs';
 export * from './roles';

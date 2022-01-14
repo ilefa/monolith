@@ -7,11 +7,15 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
-export * from './build';
-export * from './bouncer';
-export * from './dhsync';
-export * from './prefs';
-export * from './purge';
-export * from './reroll';
-export * from './sudo';
-export * from './update';
+import { modelOptions, prop } from '@typegoose/typegoose';
+
+@modelOptions({ schemaOptions: { collection: 'bouncer' } })
+export class BouncerBundle {
+    
+    @prop({ required: true })
+    public serverId: string;
+
+    @prop({ required: true })
+    public userId: string;
+    
+}

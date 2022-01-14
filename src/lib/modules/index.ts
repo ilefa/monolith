@@ -9,6 +9,7 @@
 
 export * from './auditor';
 export * from './birthday';
+export * from './bouncer';
 export * from './dining';
 export * from './dispatcher';
 export * from './events';
