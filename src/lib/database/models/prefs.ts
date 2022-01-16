@@ -64,6 +64,9 @@ export class RemotePreferenceBundle {
     @prop({ required: true })
     inviterChannelId: string;
 
+    @prop({ required: true })
+    minecraftChannelId: string;
+
     @prop({ required: true, type: () => [String] })
     superPerms: string[];
 

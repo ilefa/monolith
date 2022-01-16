@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 ILEFA Labs
+ * Copyright (c) 2022 ILEFA Labs
  * All Rights Reserved.
  * 
  * This software is proprietary and was designed and intended for internal use only.
@@ -7,8 +7,5 @@
  * whole is unlawful, and punishable by the full extent of United States Copyright law.
  */
 
-export * from './birthday';
-export * from './dining';
-export * from './minecraft';
-export * from './rename';
-export * from './status';
+export * from './dhsync';
+export * from './mcsync';

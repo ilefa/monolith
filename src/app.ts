@@ -16,6 +16,7 @@ import { COMMIT_HASH, DISPLAY_VERSION, HOST, MANAGED, RELEASE_CHANNEL } from './
 import {
     BirthdayAnnounceTask,
     BlueplateRefreshTask,
+    MinecraftStatusFetcher,
     ServerRenameTask,
     UConnStatusFetcher
 } from './lib/tasks';
@@ -29,6 +30,7 @@ import {
     Dispatcher,
     InviteTracker,
     LevelManager,
+    MinecraftStatusManager,
     PollManager,
     PreferenceBundle,
     RoleAssignmentManager,
@@ -68,6 +70,7 @@ import {
     ListBlacklistsCommand,
     MaldCommand,
     MembersCommand,
+    MinecraftSyncCommand,
     MisogynyCommand,
     PollCommand,
     PrefsCommand,
@@ -200,6 +203,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new ListBlacklistsCommand());
         this.registerCommand(new MaldCommand());
         this.registerCommand(new MembersCommand());
+        this.registerCommand(new MinecraftSyncCommand())
         this.registerCommand(new MisogynyCommand());
         this.registerCommand(new PollCommand());
         this.registerCommand(new PrefsCommand());
@@ -259,6 +263,7 @@ export class MonolithApp extends IvyEngine {
         this.registerModule(new LevelManager());
         this.registerModule(new UpdateManager());
         this.registerModule(new BouncerManager());
+        this.registerModule(new MinecraftStatusManager());
 
         // UConn-related modules
         this.registerModule(new UConnCourseDataProvider());
@@ -271,6 +276,7 @@ export class MonolithApp extends IvyEngine {
         this.scheduler.schedule({ interval: '0 0 * * *', task: new ServerRenameTask() });
         this.scheduler.schedule({ interval: '0 0 * * *', task: new BlueplateRefreshTask() });
         this.scheduler.schedule({ interval: '0 0 * * *', task: new BirthdayAnnounceTask() });
+        this.scheduler.schedule({ interval: '* * * * *', task: new MinecraftStatusFetcher() });
         this.scheduler.schedule({ interval: '* * * * *', task: new UConnStatusFetcher() });
         this.registerModule(this.scheduler);
     }

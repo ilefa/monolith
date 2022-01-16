@@ -15,6 +15,7 @@ export * from './dispatcher';
 export * from './events';
 export * from './inviter';
 export * from './levels';
+export * from './minecraft';
 export * from './poll';
 export * from './prefs';
 export * from './roles';

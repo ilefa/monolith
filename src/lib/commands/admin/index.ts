@@ -9,9 +9,9 @@
 
 export * from './build';
 export * from './bouncer';
-export * from './dhsync';
 export * from './prefs';
 export * from './purge';
 export * from './reroll';
 export * from './sudo';
+export * from './sync';
 export * from './update';

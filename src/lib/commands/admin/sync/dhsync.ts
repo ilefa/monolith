@@ -8,7 +8,7 @@
  */
 
 import { Message, User } from 'discord.js';
-import { CommandCategory, InvokerCommand } from '../system';
+import { CommandCategory, InvokerCommand } from '../../system';
 import { CommandReturn, emboss, IvyEmbedIcons } from '@ilefa/ivy';
 
 export class DinnerHallSyncCommand extends InvokerCommand {
