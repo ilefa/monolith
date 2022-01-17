@@ -37,6 +37,7 @@ export enum UConnServiceEmotes {
     PHONEBOOK = ':telephone:',
     COBALT = '<:cobalt2:922017306035494932>',
     COBALT_NEXT = '<:cobalt2:922017306035494932>',
+    SNAPSHOTS = '<:snapshots:932449252708352031>',
     ILEFA = '<:ilefa:926347172050526278>',
     RMP = ':pencil:',
 }
@@ -85,6 +86,11 @@ export const SERVICES: TrackedService[] = [
         key: 'cobalt_next',
         name: 'Cobalt (v4)',
         url: 'https://cobalt-v4.ilefa.club',
+    },
+    {
+        key: 'snapshots',
+        name: 'Snapshots',
+        url: 'https://snapshots.ilefa.club',
     },
     {
         key: 'ilefa',
