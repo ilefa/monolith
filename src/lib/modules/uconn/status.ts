@@ -10,7 +10,7 @@
 import { PreferenceBundle } from '..';
 import { TextChannel } from 'discord.js';
 import { EmbedIconType } from '../../util';
-import { bold, link, Module, Stash } from '@ilefa/ivy';
+import { bold, link, Module, Stash, time } from '@ilefa/ivy';
 import { UConnService, UConnServiceStatus } from '@ilefa/husky';
 
 export type StatusReport = {
@@ -176,6 +176,8 @@ export class UConnStatusRepository extends Module {
                 value: `${ServiceStatusEmote[entry.status.toUpperCase()]} ${entry.status}`,
                 inline: false
             })));
+
+        embed.footer = { text: `Last updated ${time(Date.now())}` }
 
         if (!message)
             return channel.send({ embeds: [embed] });
