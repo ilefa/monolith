@@ -11,10 +11,10 @@ import { User, Message } from 'discord.js';
 import { CommandCategory } from '../../system';
 import { Command, CommandReturn } from '@ilefa/ivy';
 
-export class FlourideCommand extends Command {
+export class FluorideCommand extends Command {
 
     constructor() {
-        super('flouride', 'when you show them a based schizopost and all you get back is that flouride stare', null, [], 'SEND_MESSAGES', false, false, CommandCategory.FUN);
+        super('fluoride', 'when you show them a based schizopost and all you get back is that flouride stare', null, [], 'SEND_MESSAGES', false, false, CommandCategory.FUN);
     }
 
     async execute(user: User, message: Message<boolean>, args: string[]): Promise<CommandReturn> {

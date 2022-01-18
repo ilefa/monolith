@@ -59,7 +59,7 @@ import {
     EmoteCommand,
     EyebrowCommand,
     FedCommand,
-    FlourideCommand,
+    FluorideCommand,
     FlowCommand,
     GetRealCommand,
     GigachadCommand,
@@ -193,7 +193,7 @@ export class MonolithApp extends IvyEngine {
         this.registerCommand(new EmoteCommand());
         this.registerCommand(new EyebrowCommand());
         this.registerCommand(new FedCommand());
-        this.registerCommand(new FlourideCommand());
+        this.registerCommand(new FluorideCommand());
         this.registerCommand(new FlowCommand());
         this.registerCommand(new GetRealCommand());
         this.registerCommand(new GigachadCommand());
