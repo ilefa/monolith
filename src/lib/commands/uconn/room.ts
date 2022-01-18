@@ -142,10 +142,10 @@ export class RoomCommand extends AutowiredCommand<UConnRoomDataProvider> {
     private getRoomFacts = (room: Classroom) =>
         `<:cobaltnative:924570604772933672> ${link('View with Cobalt', `https://cobalt-v4.ilefa.club/room/${room.building.code + room.room}`)}\n`
       + `:record_button: Campus: ${bold(capitalizeFirst(room.building.campus.toLowerCase()))}\n` 
-      + `:seat: Seating: ${bold(SeatingType[room.seatingType])}\n` 
-      + `:man_teacher: Board: ${bold(BoardType[room.boardType])}\n` 
-      + `:desktop: Technology: ${bold(TechType[room.techType])}\n` 
-      + `:video_camera: Lecture Capture: ${bold(LectureCaptureType[room.lectureCapture])}\n\n`
+      + `:seat: Seating: ${bold(SeatingType[room.seatingType] ?? 'Unknown')}\n` 
+      + `:man_teacher: Board: ${bold(BoardType[room.boardType] ?? 'Unknown')}\n` 
+      + `:desktop: Technology: ${bold(TechType[room.techType]) ?? 'Unknown'}\n` 
+      + `:video_camera: Lecture Capture: ${bold(LectureCaptureType[room.lectureCapture] ?? 'Unknown')}\n\n`
       + `${bold('Capacity')}\n` 
       + `:person_running: Regular: ${bold(room.capacity.full)}\n`
       + `:microbe: COVID-19: ${bold(room.capacity.covid)}\n\n` 
@@ -173,8 +173,7 @@ export class RoomCommand extends AutowiredCommand<UConnRoomDataProvider> {
             ? status 
                 ? ':white_check_mark:'
                 : ':no_entry_sign:'
-            : ':grey_question:';
-
+            : '<:question:933074469541531699>';
 
     private getRoomSchedule = (room: string, schedule: CustomRoomPayload) =>
         schedule && schedule.entries.length
@@ -188,10 +187,10 @@ export class RoomCommand extends AutowiredCommand<UConnRoomDataProvider> {
                 .map(entry => {
                     let clazz = !!entry.section;
                     let event = clazz
-                        ? link(`${entry.event} (${entry.section})`, `https://cobalt-v4.ilefa.club/course/${entry.event}`)
+                        ? link(`${entry.event} (${entry.section})`, `https://cobalt-v4.ilefa.club/course/${entry.event.replace(/\s/g, '')}`)
                         : bold(entry.event);
 
-                    return `${bold(`${entry.start} - ${bold(entry.end)}`)} used by ${event}.`;
+                    return `${bold(`${entry.start} - ${entry.end}`)} used by ${event}.`;
                 })
                 .join('\n')
             : `:calendar: ${bold(room)} has nothing scheduled for the day.`

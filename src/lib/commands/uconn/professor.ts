@@ -23,7 +23,7 @@ import {
 enum RmpTag {
     PRO = '<:triangle_up:859218865023877162>',
     CON = ':small_red_triangle_down:',
-    UNKNOWN = ':grey_question:'
+    UNKNOWN = '<:question:933074469541531699>'
 }
 
 enum RmpTagOrdinal {
