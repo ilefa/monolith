@@ -193,6 +193,7 @@ export const getEmoteForMeal = (meal: DiningHallStatus) => {
         case DiningHallStatus.BRUNCH: return ':pancakes:';
         case DiningHallStatus.LUNCH: return ':fork_and_knife:';
         case DiningHallStatus.DINNER: return ':hamburger:';
+        case DiningHallStatus.LATE_NIGHT: return ':crescent_moon:';
         default: return ':question:';
     }
 }

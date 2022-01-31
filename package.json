@@ -21,7 +21,7 @@
     "homepage": "https://github.com/ilefa/monolith#readme",
     "dependencies": {
         "@ilefa/bluepages": "^1.0.0",
-        "@ilefa/blueplate": "^1.0.4",
+        "@ilefa/blueplate": "^1.0.5-2",
         "@ilefa/bluesign": "^1.0.0",
         "@ilefa/husky": "^1.1.4",
         "@ilefa/ivy": "^1.0.8",

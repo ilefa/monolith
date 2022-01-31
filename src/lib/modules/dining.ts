@@ -66,10 +66,15 @@ export class DinnerHallManager extends Module {
         for (let menu of menus) {
             let fields: EmbedFieldData[] = [];
             for (let meal of menu.meals) {
-                let stations = meal.stations as any as ActualStationProps[];
-                let str = stations
-                    .map(station => `${bold(station.name)}\n${station.options.map(opt => `• ${opt}`).join('\n')}`)
-                    .join('\n\n');
+                let stations = meal.stations as any as ActualStationProps | ActualStationProps[];
+                let str = '';
+                // necessary for late night since it returns a non-array object
+                if (stations instanceof Array)
+                    str = stations
+                        .map(station => `${bold(station.name)}\n${station.options.map(opt => `• ${opt}`).join('\n')}`)
+                        .join('\n\n');
+                else
+                    str = `${bold(stations.name)}\n${stations.options.map(opt => `• ${opt}`).join('\n')}`;
 
                 fields.push({
                     name: getEmoteForMeal(meal.name as DiningHallStatus) + ' ' + meal.name,
