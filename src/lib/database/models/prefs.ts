@@ -67,6 +67,9 @@ export class RemotePreferenceBundle {
     @prop({ required: true })
     minecraftChannelId: string;
 
+    @prop({ required: true })
+    tendiesChannelId: string;
+
     @prop({ required: true, type: () => [String] })
     superPerms: string[];
 

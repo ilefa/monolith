@@ -9,8 +9,8 @@
 
 import { PreferenceBundle } from '.';
 import { bold, Module } from '@ilefa/ivy';
+import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { status, JavaStatusResponse } from 'minecraft-server-util';
-import { Message, MessageEmbed, MessageOptions, TextChannel } from 'discord.js';
 
 export class MinecraftStatusManager extends Module {
    
@@ -71,13 +71,8 @@ export class MinecraftStatusManager extends Module {
     }
 
     private editOrSend = (channel: TextChannel, content: MessageEmbed, message?: Message) => {
-        let opts: MessageOptions = {
-            embeds: [content]
-        };
-
-        if (message)
-            return message.edit(opts);
-
+        let opts = { embeds: [content] };
+        if (message) return message.edit(opts);
         channel.send(opts);
     }
 

@@ -30,6 +30,7 @@ export class PreferenceBundle extends Module {
     public readonly statusChannelId: string;
     public readonly inviterChannelId: string;
     public readonly minecraftChannelId: string;
+    public readonly tendiesChannelId: string;
     public readonly superPerms: string[];
 
     constructor(bundle: RemotePreferenceBundle) {
@@ -52,6 +53,7 @@ export class PreferenceBundle extends Module {
         this.statusChannelId = bundle.statusChannelId;
         this.inviterChannelId = bundle.inviterChannelId;
         this.minecraftChannelId = bundle.minecraftChannelId;
+        this.tendiesChannelId = bundle.tendiesChannelId;
         this.superPerms = bundle.superPerms;
     }
 

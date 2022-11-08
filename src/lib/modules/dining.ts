@@ -32,6 +32,7 @@ type ThreadDataEntry = {
 export class DinnerHallManager extends Module {
 
     public channelId: string;
+    public tendiesChannelId: string;
 
     constructor() {
         super('DinnerHallManager', 'Dining');
@@ -47,6 +48,7 @@ export class DinnerHallManager extends Module {
         }
 
         this.channelId = bundle.blueplateChannelId;
+        this.tendiesChannelId = bundle.tendiesChannelId;
         this.log('Blueplate Integration is ready.');
     }
 
@@ -75,6 +77,12 @@ export class DinnerHallManager extends Module {
                         .join('\n\n');
                 else
                     str = `${bold(stations.name)}\n${stations.options.map(opt => `• ${opt}`).join('\n')}`;
+
+                // major bag alert
+                if (str.includes('Zesty Fried Chicken Tenders')) {
+                    let tendiesChannel = await this.client.channels.fetch(this.tendiesChannelId) as TextChannel;
+                    if (tendiesChannel) await tendiesChannel.send(`:tendies: chicken tendies at ${bold(DiningHallType[menu.type])}!!!!!`);
+                }
 
                 fields.push({
                     name: getEmoteForMeal(meal.name as DiningHallStatus) + ' ' + meal.name,

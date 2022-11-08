@@ -219,7 +219,7 @@ export class ChannelUpdateProbe extends AuditorProbe {
         if (a.permissionsLocked !== b.permissionsLocked)
             return ChannelUpdateCause.CATEGORY_PERM_SYNC;
         
-        if ([...a.permissionOverwrites.cache.values()] !== [...b.permissionOverwrites.cache.values()])
+        if (a.permissionOverwrites.cache.values() !== b.permissionOverwrites.cache.values())
             return ChannelUpdateCause.PERM_OVERRIDES;    
 
         if (a instanceof TextChannel && b instanceof TextChannel) {

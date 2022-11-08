@@ -24,9 +24,10 @@ export class RerollCommand extends InvokerCommand {
         this.invoke(
             async () => {
                 let msg = await this.reply(message, this.embeds.build('AF Management', IvyEmbedIcons.PREFS, 'Rerolling..', [], message));
-                this.manager.client.once('guildUpdate', (old, current) => this.renameEventHandler(old, current, msg));
+                this.manager.client.once('guildUpdate', (old, current) => this.renameEventHandler(old as Guild, current as Guild, msg));
             },
-            reason => this.reply(message, this.embeds.build('AF Management', IvyEmbedIcons.PREFS, reason, [], message)));
+            reason => this.reply(message, this.embeds.build('AF Management', IvyEmbedIcons.PREFS, reason, [], message))
+        );
         
         return CommandReturn.EXIT;
     }

@@ -1,19 +1,22 @@
 {
-   "compilerOptions": {
-      "lib": [
-         "es5",
-         "es6",
-         "ES2019.String"
-      ],
-      "target": "es2017",
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "outDir": "./build",
-      "esModuleInterop": true,
-      "resolveJsonModule": true,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "downlevelIteration": true,
-      "sourceMap": true,
-   }
+    "exclude": [
+        "node_modules/**/*",
+    ],
+    "compilerOptions": {
+        "lib": [
+            "es5",
+            "es6",
+            "ES2019.String"
+        ],
+        "target": "es2017",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "./build",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "downlevelIteration": true,
+        "sourceMap": true
+    }
 }
